@@ -1,0 +1,17 @@
+{
+  "name": "biz",
+  "version": "1.0.0",
+  "description": "biz service for FlyBBS",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "flybbs"
+  ],
+  "author": "Kevin",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^6.1.6"
+  }
+}
