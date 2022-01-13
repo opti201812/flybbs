@@ -4,6 +4,7 @@ const DB = 'mongodb://172.25.202.232:27017/bbs';
 const bodyParser = require('body-parser');
 const User = require('./model/User');
 const Thread = require('./model/Thread');
+const users = require('./api/users')
 
 mongoose.connect(DB, (err) => {
     if (err) throw err;
@@ -24,7 +25,6 @@ mongoose.connect(DB, (err) => {
     user.threads.push(thread);
     user.save();
     thread.save();
-
 
     const app = express();
     app.use(express.static('static'));
@@ -51,20 +51,8 @@ mongoose.connect(DB, (err) => {
         })
     });
 
-    app.post('/api/user', async(req, res) => {
-        User.find().exec((e, users) => {
-            try {
-                const user=await User.find();
-                return res.json({
-                    data: users
-                });
-            } catch (error) {
-                res.status(400).json({
-                    message: e.message
-                });
-            }
-        });
-    });
+    users.apis(app);
+    
     app.listen(3000);
 
 })
