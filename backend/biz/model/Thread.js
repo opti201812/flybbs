@@ -22,5 +22,5 @@ const ThreadSchema = new mongoose.Schema({
     }
 });
 
-const Thread = mongoose.model('User', ThreadSchema);
+const Thread = mongoose.model('Thread', ThreadSchema);
 module.exports = Thread;

@@ -8,23 +8,23 @@ const users = require('./api/users')
 
 mongoose.connect(DB, (err) => {
     if (err) throw err;
-    console.log('Already connected.')
+    console.log('Successful connected to MongoDB')
 
-    const user = new User({
-        username: "Test",
-        password: '123456'
-    });
-    user.save();
+    // const testuser = new User({
+    //     username: "Test",
+    //     password: '123456'
+    // });
+    // // testuser.save();
 
-    const thread = new Thread({
-        title: 'Happy new year!',
-        content: 'Merry christmas & happy new year',
-        author: user,
-    });
+    // const thread = new Thread({
+    //     title: 'Happy new year!',
+    //     content: 'Merry christmas & happy new year',
+    //     author: testuser,
+    // });
 
-    user.threads.push(thread);
-    user.save();
-    thread.save();
+    // testuser.threads.push(thread);
+    // testuser.save();
+    // thread.save();
 
     const app = express();
     app.use(express.static('static'));
@@ -34,22 +34,22 @@ mongoose.connect(DB, (err) => {
         res.send('Hello FlyBBS!');
     });
 
-    app.post('/api/saytitle', (req, res) => {
-        const data = req.body;
-        let title;
+    // app.post('/api/saytitle', (req, res) => {
+    //     const data = req.body;
+    //     let title;
 
-        if (data.gender === 'Male') {
-            title = `Mr. ${data.name[0]}`;
-        } else if (data.gender === 'Female') {
-            title = `Mrs. ${data.name[0]}`;
-        } else {
-            title = data.name;
-        }
+    //     if (data.gender === 'Male') {
+    //         title = `Mr. ${data.name[0]}`;
+    //     } else if (data.gender === 'Female') {
+    //         title = `Mrs. ${data.name[0]}`;
+    //     } else {
+    //         title = data.name;
+    //     }
 
-        res.json({
-            title: title
-        })
-    });
+    //     res.json({
+    //         title: title
+    //     })
+    // });
 
     users.apis(app);
     

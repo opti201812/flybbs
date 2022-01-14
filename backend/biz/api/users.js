@@ -1,5 +1,5 @@
 const User = require('../model/User');
-const Cryto = require('crypto');
+const Crypto = require('crypto');
 const uuid = require('uuid');
 const multer = require('multer');
 const ERROR_CODE_MESSAGE = {
@@ -17,34 +17,67 @@ const ERROR_CODE_MESSAGE = {
     },
     'USER_NOEXIST': {
         'code': '0x00010003',
-        'message': 'User not exist or password error',
+        'message': 'User does not exist or password error',
     },
     'USER_PASSWORDERROR': {
         'code': '0x00010004',
         'message': 'User not exist or password error',
+    },
+    'USER_ERROR_CONFIRM_PASSWORD': {
+        'code': '0x00010005',
+        'message': 'Confirm password is not the same with password',
+    },
+    'USER_ALREADY_EXISTS': {
+        'code': '0x00010006',
+        'message': 'User already exists',
+    },
+    'USER_NOTOKEN': {
+        'code': '0x00010007',
+        'message': 'Invalid token',
+    },
+    'USER_TOKENEXPIRED': {
+        'code': '0x00010008',
+        'message': 'Wrong token or token has expired',
+    },
+    'USER_WRONG_TOKEN': {
+        'code': '0x00010009',
+        'message': 'Wrong token',
     },
 };
 const upload = multer({
     dest: './static/upload',
 })
 
+/**
+ * General error message body
+ * 
+ * @param {res} response 
+ * @param {*} errCode 
+ * @param {*} errMsg 
+ * @returns the error message body
+ */
+const errResult = (res, errCode, errMsg) => res.status(400).json({
+    code: errCode,
+    message: errMsg,
+});
+
 const apis = (app) => {
     app.get('/api/users', async (req, res) => {
-        User.find().exec((e, users) => {
-            try {
-                const user = await User.find();
-                return res.json({
-                    data: users
-                });
-            } catch (error) {
-                res.status(400).json({
-                    message: e.message
-                });
-            }
-        });
+        try {
+            const users = await User.find();
+            return res.json({
+                data: users
+            });
+        } catch (error) {
+            res.status(400).json({
+                message: error.message
+            });
+        }
     });
 
-    app.post('/api/users', async (req, res) => {
+    app.post('/api/users/new', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const {
                 username,
@@ -52,25 +85,22 @@ const apis = (app) => {
                 confirmpass,
             } = req.body;
             if (!username) {
-                return res.json({
-                    errorCode: '00010001',
-                    message: 'Invalid user name'
-                })
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
             }
             if (!password) {
-                // retError("Invalid password")();
+                return formError(ERROR_CODE_MESSAGE.USER_NOPASSWORD);
             }
             if (!confirmpass) {
-                // retError("Invalid confirm password")();
+                return formError(ERROR_CODE_MESSAGE.USER_ERROR_CONFIRM_PASSWORD);
             }
             if (!(confirmpass == password)) {
-                // retError("Password is different with confirm password")();
+                return formError(ERROR_CODE_MESSAGE.USER_ERROR_CONFIRM_PASSWORD);
             }
             const user = await User.findOne({
-                username
+                username: username,
             });
             if (user) {
-                // retError("User name is already exists.")();
+                return formError(ERROR_CODE_MESSAGE.USER_ALREADY_EXISTS);
             }
             const passwordCryped = Crypto.createHash('sha1').update(password).digest('hex');
             const newUser = {
@@ -79,10 +109,7 @@ const apis = (app) => {
             };
             const newuser = new User(newUser);
             await newuser.save();
-            return res.json({
-                errorCode: '00010000',
-                message: 'add user OK'
-            })
+            return res.json(ERROR_CODE_MESSAGE.USER_OK)
         } catch (e) {
             res.status(400).json({
                 message: e.message,
@@ -91,20 +118,15 @@ const apis = (app) => {
     });
 
     app.post('/api/users/login', async (req, res) => {
-        const errResult = (res, errCode, errMsg) => res.status(400).json({
-            errorCode: errCode,
-            message: errMsg,
-        });
-
         const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
 
         try {
             const { username, password, } = req.body;
             if (!username) {
-                return formError('USER_NONAME');
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
             }
             if (!password) {
-                return formError('USER_NOPASSWORD');
+                return formError(ERROR_CODE_MESSAGE.USER_NOPASSWORD);
             }
             const passwordCryped = Crypto.createHash('sha1').update(password).digest('hex');
             const user = await User.findOne({
@@ -135,23 +157,26 @@ const apis = (app) => {
     });
 
     app.post('/api/users/auth', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
         try {
+            console.log(req.body);
+
             const { username, token, } = req.body;
             if (!username) {
-                return formError('USER_NONAME');
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
             }
             if (!token) {
-                return formError('USER_NOTOKEN');
+                return formError(ERROR_CODE_MESSAGE.USER_NOTOKEN);
             }
             const user = await User.findOne({   //if user not exists?
-                username,
-                token,
+                username: username,
+                token: token,
             }).select('-password -token');
             if (!user) {
                 return formError(ERROR_CODE_MESSAGE.USER_TOKENEXPIRED);
             }
             return res.json({
-                message: ERROR_CODE_MESSAGE.USER_AUTHOK,
+                message: ERROR_CODE_MESSAGE.USER_OK.message,
                 data: user,
             })
         } catch (error) {
@@ -163,43 +188,48 @@ const apis = (app) => {
     });
 
     app.post('/api/users/logout', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
 
         try {
             const { username, token } = req.body;
             if (!username) {
-                return formError('USER_NONAME');
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
             }
             if (!token) {
-                return formError('USER_NOTOKEN');
+                return formError(ERROR_CODE_MESSAGE.USER_NOTOKEN);
             }
             const user = await User.findOne({
-                username,
+                username: username,
             }).select('-password');
             if (!user) {
                 return formError(ERROR_CODE_MESSAGE.USER_NOEXIST);
             }
-            user.token = null;
-            await user.save();
+            if (token == user.token) {
+                user.token = null;
+                await user.save();
+            } else {
+                return formError(ERROR_CODE_MESSAGE.USER_WRONG_TOKEN);
+            }
 
-            return res.json({
-                message: ERROR_CODE_MESSAGE.USER_EXITOK,
-            })
+            return res.json(ERROR_CODE_MESSAGE.USER_OK)
         } catch (error) {
             return res.status(400).json({
-                message: error.message;
+                message: error.message,
             })
         }
 
     });
 
-    app.patch('/api/users', upload.single('avatar'), async(req, res)=>{
+    app.patch('/api/users', upload.single('avatar'), async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
-            const {username, token, description} = req.body;
+            const { username, token, description } = req.body;
             if (!username) {
-                return formError('USER_NONAME');
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
             }
             if (!token) {
-                return formError('USER_NOTOKEN');
+                return formError(ERROR_CODE_MESSAGE.USER_NOTOKEN);
             }
             const user = await User.findOne({   //if user not exists?
                 username,
@@ -213,15 +243,34 @@ const apis = (app) => {
                 user.description = description;
                 await user.save();
             }
-            return res.json({
-                message: ERROR_CODE_MESSAGE.USER_MODIFYOK,
-            })
+            return res.json(ERROR_CODE_MESSAGE.USER_OK);
         } catch (e) {
             return res.status(400).json({
                 message: e.message,
             })
         }
     })
+
+    app.get('/api/user/:username', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+        try {
+            console.log(req.params)
+            const { username, } = req.params;    // stake exists. aquire username from user input
+            if (!username) {
+                return formError(ERROR_CODE_MESSAGE.USER_NONAME);
+            }
+            const user = await User.findOne({   //if user not exists?
+                username,
+            }).select('-password -token')
+                .populate('threads', 'title posttime');
+            if (!user) {
+                return formError(ERROR_CODE_MESSAGE.USER_NOEXIST);
+            }
+            return res.json({ data: user });
+        } catch (error) {
+
+        }
+    });
 }
 
 module.exports.apis = apis;

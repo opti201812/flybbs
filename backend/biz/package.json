@@ -12,6 +12,7 @@
   "author": "Kevin",
   "license": "ISC",
   "dependencies": {
+    "crypto": "^1.0.1",
     "mongoose": "^6.1.6"
   }
 }
