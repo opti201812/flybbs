@@ -1,6 +1,7 @@
 const User = require('../model/User');
 const Cryto = require('crypto');
 const uuid = require('uuid');
+const multer = require('multer');
 const ERROR_CODE_MESSAGE = {
     'USER_OK': {
         'code': '0x00010000',
@@ -22,7 +23,10 @@ const ERROR_CODE_MESSAGE = {
         'code': '0x00010004',
         'message': 'User not exist or password error',
     },
-},
+};
+const upload = multer({
+    dest: './static/upload',
+})
 
 const apis = (app) => {
     app.get('/api/users', async (req, res) => {
@@ -39,6 +43,7 @@ const apis = (app) => {
             }
         });
     });
+
     app.post('/api/users', async (req, res) => {
         try {
             const {
@@ -84,6 +89,7 @@ const apis = (app) => {
             });
         }
     });
+
     app.post('/api/users/login', async (req, res) => {
         const errResult = (res, errCode, errMsg) => res.status(400).json({
             errorCode: errCode,
@@ -127,6 +133,7 @@ const apis = (app) => {
             })
         }
     });
+
     app.post('/api/users/auth', async (req, res) => {
         try {
             const { username, token, } = req.body;
@@ -184,6 +191,37 @@ const apis = (app) => {
         }
 
     });
+
+    app.patch('/api/users', upload.single('avatar'), async(req, res)=>{
+        try {
+            const {username, token, description} = req.body;
+            if (!username) {
+                return formError('USER_NONAME');
+            }
+            if (!token) {
+                return formError('USER_NOTOKEN');
+            }
+            const user = await User.findOne({   //if user not exists?
+                username,
+                token,
+            }).select('-password -token');
+            if (!user) {
+                return formError(ERROR_CODE_MESSAGE.USER_TOKENEXPIRED);
+            };
+            if (req.file) {
+                user.avatar = req.file.filename;
+                user.description = description;
+                await user.save();
+            }
+            return res.json({
+                message: ERROR_CODE_MESSAGE.USER_MODIFYOK,
+            })
+        } catch (e) {
+            return res.status(400).json({
+                message: e.message,
+            })
+        }
+    })
 }
 
 module.exports.apis = apis;
