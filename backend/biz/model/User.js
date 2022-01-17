@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Thread = require('./Thread')
+const Thread = require('../model/Thread')
 
 const UserSchema = new mongoose.Schema({
     username: {

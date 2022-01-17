@@ -2,8 +2,7 @@ const User = require('../model/User');
 const Crypto = require('crypto');
 const uuid = require('uuid');
 const multer = require('multer');
-const ERROR_CODE_MESSAGE = require('./commonError');
-const errResult = require('./commonError');
+const {errResult, ERROR_CODE_MESSAGE} = require('./commonError');
 
 const upload = multer({
     dest: './static/upload',

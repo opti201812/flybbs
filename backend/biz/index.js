@@ -4,7 +4,8 @@ const DB = 'mongodb://172.25.202.232:27017/bbs';
 const bodyParser = require('body-parser');
 const User = require('./model/User');
 const Thread = require('./model/Thread');
-const users = require('./api/users')
+const users = require('./api/users');
+const threads = require('./api/threads');
 
 mongoose.connect(DB, (err) => {
     if (err) throw err;
@@ -52,6 +53,7 @@ mongoose.connect(DB, (err) => {
     // });
 
     users.apis(app);
+    threads.apis(app);
     
     app.listen(3000);
 

@@ -15,6 +15,10 @@ const CommentSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'Thread',
         required: true,
+    },
+    author: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'User',
     }
 });
 

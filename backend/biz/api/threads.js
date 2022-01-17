@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
-const Thread = require('./Thread')
+const Thread = require('../model/Thread')
 const Comment = require('../model/Comment')
 const User = require('../model/User');
-const ERROR_CODE_MESSAGE = require('./commonError');
-const errResult = require('./commonError');
+const {errResult, ERROR_CODE_MESSAGE} = require('./commonError');
 const bodyParser = require('body-parser');
-
 const Crypto = require('crypto');
 const multer = require('multer');
-const users = require('./api/users')
+const users = require('./users');
 
 const apis = (app) => {
     /**
@@ -19,7 +17,7 @@ const apis = (app) => {
      * content
      * 
      */
-    app.post('/api/theads', async (req, res) => {
+    app.post('/api/threads', async (req, res) => {
         const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
 
         try {
@@ -35,7 +33,7 @@ const apis = (app) => {
             const newThread = {
                 title: title,
                 content: content,
-                authore: user,
+                author: user,
             };
             const thread = new Thread(newThread);
             await thread.save();
@@ -50,6 +48,8 @@ const apis = (app) => {
     });
 
     app.post('/api/comments/:tid', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const { tid, } = req.params;
             const { username, token, content } = req.body;
@@ -78,6 +78,8 @@ const apis = (app) => {
     });
 
     app.get('/api/threads', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const threads = await Thread.find().populate('author', 'username avatar');
             return res.json({ data: threads });
@@ -87,6 +89,8 @@ const apis = (app) => {
     });
 
     app.get('/api/threads/:tid', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const { tid } = req.params;
             if (!tid) return formError(ERROR_CODE_MESSAGE.THREAD_NOTID);
@@ -106,6 +110,8 @@ const apis = (app) => {
     });
 
     app.patch('/api/threads/:tid', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const { tid } = req.params;
             const { username, token, title, content } = req.body;
@@ -137,6 +143,8 @@ const apis = (app) => {
     });
 
     app.delete('/api/threads/:tid', async (req, res) => {
+        const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
+
         try {
             const { tid } = req.params;
             const { username, token, } = req.body;
@@ -177,5 +185,5 @@ const apis = (app) => {
         }
     });
     */
-    module.exports.apis = apis;
 }
+module.exports.apis = apis;

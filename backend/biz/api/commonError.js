@@ -53,7 +53,7 @@ const ERROR_CODE_MESSAGE = {
     },
     'THREAD_NOEXIST': {
         'code': '0x00020004',
-        'message': 'The thread did not exist',
+        'message': 'The thread id does not exists',
     },
     'THREAD_NOTAUTHOR': {
         'code': '0x00020005',
@@ -78,7 +78,7 @@ const errResult = (res, errCode, errMsg) => res.status(400).json({
     message: errMsg,
 });
 
-module.exports = errResult;
-module.exports = ERROR_CODE_MESSAGE;
+module.exports.errResult = errResult;
+module.exports.ERROR_CODE_MESSAGE = ERROR_CODE_MESSAGE;
 // export { _ERROR_CODE_MESSAGE as ERROR_CODE_MESSAGE };
 // export { errResult as errResult};
