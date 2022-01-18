@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import { Carousel,Jumbotron } from 'react-bootstrap';
 const Intro = () => {
     return (
         <div>

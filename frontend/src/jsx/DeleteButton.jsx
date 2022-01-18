@@ -20,11 +20,11 @@ const DeleteButton = (props) => {
     };
 
     const handleDelete = async () => {
-        if (confirm('Please confirm to delete.')) {
+        // if (confirm('Please confirm to delete.')) {
             const { username, token } = JSON.parse(localStorage.getItem(DOMAIN));
             const body = { username, token, tid };
             handle(body);
-        }
+        // }
     }
 
     return (
