@@ -1,5 +1,6 @@
-const React, { useState, useEffect } = require('react');
 import {HOST, PORT} from '../config'
+const React, { useState, useEffect } = require('react');
+import {Table } from 'react-bootstrap';
 
 const ThreadList = (props) => {
     //const { threads } = props;
@@ -26,7 +27,7 @@ const ThreadList = (props) => {
         <Row key={index} thread={thread} />
     ));
     return (
-        <table>
+        <Table striped bordered hover>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -39,7 +40,7 @@ const ThreadList = (props) => {
             <tbody>
                 {rows}
             </tbody>
-        </table>
+        </Table>
     );
 }
 
