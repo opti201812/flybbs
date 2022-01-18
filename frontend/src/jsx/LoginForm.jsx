@@ -1,6 +1,6 @@
-import { HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Table } from 'react-bootstrap';
+import { HOST, PORT, DOMAIN } from '../config'
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const LoginForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/users/login`;

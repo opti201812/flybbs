@@ -1,6 +1,6 @@
 import { DOMAIN, HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Modal, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Modal, Button } from 'react-bootstrap';
 
 const PostForm = () => {
     const reqUrl = `${HOST}:${PORT}/api/threads`;
@@ -9,7 +9,7 @@ const PostForm = () => {
         const showModal = () => setShow(true);
         const closeModal = () => setShow(false);
         const handlePost = async () => {
-            const { username, token } = JSON.parse(await localStorage.getitem(DOMAND));
+            const { username, token } = JSON.parse(await localStorage.getitem(DOMAIN));
             const form = document.forms.PostForm;
             const title = form.title.value;
             const content = form.content.value;

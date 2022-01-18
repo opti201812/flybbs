@@ -1,6 +1,6 @@
 import { DOMAIN, HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Modal, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Modal, Button } from 'react-bootstrap';
 
 const ModifyForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;

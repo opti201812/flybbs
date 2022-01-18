@@ -1,8 +1,36 @@
 import { HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const RegisterForm = (props) => {
+
+    const handelRegister = (e) => {
+        e.preventDefault();
+        const form = document.forms.registerFoem;
+        const username = form.username.value;
+        const password = form.password.value;
+        const confirmpass = form.password.value;
+        const body = { username, password, confirmpass };
+        register(body);
+    }
+
+    const register = async (body) => {
+        const reqUrl = `${HOST}:${PORT}/api/users`;
+        try {
+            const res = await fetch(reqUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            })
+
+            const result = await res.json();
+
+            alert(result.message);
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
     return (
         <Form id="registerForm">
             <Form.Group controlId="username">
@@ -21,33 +49,6 @@ const RegisterForm = (props) => {
             <Button variant="primary" type="submit" onClick={(e) => handelRegister(e)}>Register</Button>
         </Form>
     );
-}
-
-const handelRegister = (e) => {
-    e.preventDefault();
-    const form = document.forms.registerFoem;
-    const username = form.username.value;
-    const password = form.password.value;
-    const confirmpass = form.password.value;
-    const body = { username, password, confirmpass };
-    register(body);
-}
-
-const register = async (body) => {
-    const reqUrl = `${HOST}:${PORT}/api/users`;
-    try {
-        const res = await fetch(reqUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-        })
-
-        const result = await res.json();
-
-        alert(result.message);
-    } catch (error) {
-        alert(error.message);
-    }
 }
 
 export default RegisterForm;

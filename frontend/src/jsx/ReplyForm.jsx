@@ -1,6 +1,6 @@
 import { DOMAIN, HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Modal, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Modal, Button } from 'react-bootstrap';
 
 const ReplyForm = (props) => {
     const { tid } = props;
@@ -9,7 +9,7 @@ const ReplyForm = (props) => {
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             })
             const result = await res.json();
@@ -18,7 +18,15 @@ const ReplyForm = (props) => {
             alert(error.message);
         }
     }
-    
+    const handleReply = async (e) => {
+        e.preventDefault();
+        const {username, token} = JSON.parse(localStorage.getItem(DOMAIN));
+        const form = document.forms.replyForm;
+        const content = form.content.value;
+        const body = { username, token, content};
+        reply(body);
+    }
+
     return (
         <Form id="replyForm" className="p-3">
             <Form.Group controlId="content">

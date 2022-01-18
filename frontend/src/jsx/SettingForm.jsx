@@ -1,13 +1,14 @@
 import { DOMAIN, HOST, PORT } from '../config'
-const React, { useState, useEffect } = require('react');
-import { Form, Table } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const SettingForm = (props) => {
-    const reqUrl = `${HOST}:${PORT}/api/users/${username}`;
+    const [settings, setSettings] = useState([]);
     const loadSettings = async (body) => {
         try {
-            const storage = await localStorage.getItem(DOMAIN);
+            const storage = localStorage.getItem(DOMAIN);
             const { username, token } = JSON.parse(storage);
+            const reqUrl = `${HOST}:${PORT}/api/users/${username}`;
             const res = await fetch(reqUrl, {
                 method: 'GET',
                 headers: { 'Conten-Type': 'application/json' },
@@ -35,13 +36,13 @@ const SettingForm = (props) => {
 
     const setting = async (body) => {
         try {
-            const { username, token } = JSON.parse(storage);
+            const { username, token } = JSON.parse(localStorage.getItem(DOMAIN));
             const { description } = body;
             const formData = new FormData();
-            await formData.append("username", username);
-            await formData.append("token", token);
-            await formData.append("description", description);
-            await formData.append("avatar", docemtn.querySelector('#uploader').files[0]);
+            formData.append("username", username);
+            formData.append("token", token);
+            formData.append("description", description);
+            formData.append("avatar", document.querySelector('#uploader').files[0]);
             const res = await fetch(`${HOST}:${PORT}/api/users/`, {
                 method: "PATCH",
                 body: formData,
