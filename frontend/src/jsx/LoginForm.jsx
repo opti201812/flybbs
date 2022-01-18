@@ -1,6 +1,6 @@
-import {HOST, PORT} from '../config'
+import { HOST, PORT } from '../config'
 const React, { useState, useEffect } = require('react');
-import {Form, Table } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 
 const LoginForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/users/login`;
@@ -8,13 +8,13 @@ const LoginForm = (props) => {
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',
-                headers: {'Conten-Type':'application/json'},
+                headers: { 'Conten-Type': 'application/json' },
                 body: JSON.stringify(body),
             });
             const result = res.json();
             if (res.ok) {
                 alert(result.message);
-                const data = {username: result.data.username, token: result.data.token};
+                const data = { username: result.data.username, token: result.data.token };
                 await localStorage.setItem(DOMAIN, JSON.stringify(data));
             } else {
                 alert(result.message);
@@ -23,13 +23,13 @@ const LoginForm = (props) => {
             alert(error.message);
         }
     };
-    
+
     const handleLogin = (e) => {
         e.preventDefault();
         const form = document.forms.loginForm;
         const username = form.username.value;
         const password = form.password.value;
-        const body = {username, password};
+        const body = { username, password };
         login(body);
     }
     return (

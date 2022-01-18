@@ -1,6 +1,6 @@
-import {HOST, PORT} from '../config'
+import { HOST, PORT } from '../config'
 const React, { useState, useEffect } = require('react');
-import {Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 const ThreadList = (props) => {
     //const { threads } = props;

@@ -1,6 +1,6 @@
-import {HOST, PORT} from '../config'
+import { HOST, PORT } from '../config'
 const React, { useState, useEffect } = require('react');
-import {Form, Table } from 'react-bootstrap';
+import { Form, Table } from 'react-bootstrap';
 
 const RegisterForm = (props) => {
     return (
@@ -18,7 +18,7 @@ const RegisterForm = (props) => {
                 <Form.Label>Confirm password</Form.Label>
                 <Form.Control type="password" placeholder="Plese retype the password" ></Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={(e)=>handelRegister(e)}>Register</Button>
+            <Button variant="primary" type="submit" onClick={(e) => handelRegister(e)}>Register</Button>
         </Form>
     );
 }
@@ -27,9 +27,9 @@ const handelRegister = (e) => {
     e.preventDefault();
     const form = document.forms.registerFoem;
     const username = form.username.value;
-    const password =form.password.value;
+    const password = form.password.value;
     const confirmpass = form.password.value;
-    const body = {username, password, confirmpass};
+    const body = { username, password, confirmpass };
     register(body);
 }
 
@@ -38,7 +38,7 @@ const register = async (body) => {
     try {
         const res = await fetch(reqUrl, {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
 

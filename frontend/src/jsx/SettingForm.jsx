@@ -61,7 +61,7 @@ const SettingForm = (props) => {
             </Form.Group>
             <Form.Group controlId="uploader">
                 <Form.Label>Avatar</Form.Label>
-                <img src={settings.avatar ? `upload/${settings.avarar}`: 'img/avatar.png'} alt='avatar' className = "rounder img-thumbnail" />
+                <img src={settings.avatar ? `upload/${settings.avarar}` : 'img/avatar.png'} alt='avatar' className="rounder img-thumbnail" />
                 <Form.Control type="password" placeholder="Please input password" />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={e => handleSetting(e)}>OK</Button>
