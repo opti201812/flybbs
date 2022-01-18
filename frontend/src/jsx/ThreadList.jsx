@@ -46,8 +46,8 @@ const ThreadList = (props) => {
 
 const Row = (props) => {
     const { thread } = props;
-    const [click, setClick] = useState(0);
-    const [fav, setFav] = useState(thread.fav);
+    // const [click, setClick] = useState(0);
+    // const [fav, setFav] = useState(thread.fav);
     return (
         <tr>
             <td>{thread.title}</td>

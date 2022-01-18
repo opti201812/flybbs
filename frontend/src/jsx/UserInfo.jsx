@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
-import { HOST, PORT, DOMAIN } from '../config';
+import { HOST, PORT } from '../config';
 
 const UserInfo = (props) => {
     const { username } = props;
@@ -24,7 +24,7 @@ const UserInfo = (props) => {
             }
         };
         getUser();
-    }, []);
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
     return (
         <div>
             <ProfileInfo user={user} />
@@ -33,7 +33,7 @@ const UserInfo = (props) => {
     );
 }
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
     const { user } = props;
     return (
         <Card>

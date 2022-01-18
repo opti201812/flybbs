@@ -1,5 +1,5 @@
 import { DOMAIN, HOST, PORT } from '../config'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 
 const PostForm = () => {

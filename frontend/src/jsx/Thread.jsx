@@ -1,7 +1,7 @@
-import { DOMAIN, HOST, PORT } from '../config'
+import { HOST, PORT } from '../config'
 import React, { useState, useEffect } from 'react';
-import { Media } from 'react-bootstrap';
-
+// import Media from 'react-bootstrap/Media';
+const Media = () => <div></div>;
 const Thread = (props) => {
     const { tid } = props;
     const [thread, setThread] = useState({});
@@ -9,7 +9,7 @@ const Thread = (props) => {
     useEffect(() => {
         const loadThread = async () => {
             try {
-                const res = await fetch(`#{HOST}:${PORT}/api/threds/${tid}`);
+                const res = await fetch(`${HOST}:${PORT}/api/threds/${tid}`);
                 const result = await res.json();
                 if (res.ok) {
                     setThread(result.data.thread);

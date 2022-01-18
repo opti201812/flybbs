@@ -1,6 +1,6 @@
 import { DOMAIN, HOST, PORT } from '../config'
-import React, { useState, useEffect } from 'react';
-import { Form, Modal, Button } from 'react-bootstrap';
+import React from 'react';
+import { Form, Button } from 'react-bootstrap';
 
 const ReplyForm = (props) => {
     const { tid } = props;

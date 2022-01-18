@@ -3,28 +3,28 @@ import React, { useState, useEffect } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 
 const ModifyForm = (props) => {
-    const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;
     const { tid } = props;
     const [title, setTitle] = useState([]);
     const [content, setContent] = useState([]);
-    const loadThread = async () => {
-        try {
-            const res = await fetch(reqUrl, { method: 'GET' });
-            const result = res.json();
-            if (res.ok) {
-                setTitle(result.data.thread.title);
-                setContent(result.data.thread.content);
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            alert(error.message);
-        }
-    };
-
     useEffect(() => {
+        const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;
+        const loadThread = async () => {
+            try {
+                const res = await fetch(reqUrl, { method: 'GET' });
+                const result = res.json();
+                if (res.ok) {
+                    setTitle(result.data.thread.title);
+                    setContent(result.data.thread.content);
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+
         loadThread();
-    }, []);
+    }, []);//eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Form id="modifyForm">
@@ -55,7 +55,7 @@ const ModifyButton = (props) => {
                 body: JSON.stringify(body),
             })
             const result = await res.json();
-            alert(res.message);
+            alert(result.message);
             if (res.ok) {
                 closeModal();
             }

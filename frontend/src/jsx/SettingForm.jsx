@@ -7,7 +7,7 @@ const SettingForm = (props) => {
     const loadSettings = async (body) => {
         try {
             const storage = localStorage.getItem(DOMAIN);
-            const { username, token } = JSON.parse(storage);
+            const { username } = JSON.parse(storage);
             const reqUrl = `${HOST}:${PORT}/api/users/${username}`;
             const res = await fetch(reqUrl, {
                 method: 'GET',

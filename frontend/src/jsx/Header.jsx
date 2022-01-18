@@ -28,7 +28,7 @@ const Header = () => {
         authenticate();
     }, []);
 
-    const logout = () => {
+    const logout = async () => {
         const url = `${HOST}:${PORT}/api/users/logout`;
         try {
             const data = JSON.parse(localStorage.getItem(DOMAIN));

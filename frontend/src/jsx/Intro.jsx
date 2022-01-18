@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, Jumbotron } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 const Intro = () => {
     return (
         <div>
@@ -36,13 +36,13 @@ const Demo = () => {
 
 const Slogan = () => {
     return (
-        <Jumbotron>
+        <div>
             <h1>FlyBBS</h1>
             <p>
                 Welcome to FlyBBS
                 Let's speak whatever you want!
             </p>
-        </Jumbotron>
+        </div>
     )
 }
 export default Intro;
