@@ -8,14 +8,14 @@ const LoginForm = (props) => {
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',
-                headers: { 'Conten-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
             });
-            const result = res.json();
+            const result = await res.json();
             if (res.ok) {
                 alert(result.message);
                 const data = { username: result.data.username, token: result.data.token };
-                await localStorage.setItem(DOMAIN, JSON.stringify(data));
+                localStorage.setItem(DOMAIN, JSON.stringify(data));
             } else {
                 alert(result.message);
             }

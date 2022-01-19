@@ -7,12 +7,16 @@ const ThreadList = (props) => {
 
     const [threads, setThreads] = useState([]);
     useEffect(() => {
-        setThreads([{ title: "slj", author: "john", fav: true }, { title: "slj", author: "john", fav: false }]);
+        setThreads([{ title: "loading...", author: "loading...", posttime: "0000-00-00" }]);
+        const reqUrl = `${HOST}:${PORT}/api/threads`;
         const loadThreads = async () => {
             try {
-                const res = await fetch(`${HOST}:${PORT}/api/threads`, { method: 'GET' });
+                console.log("reqUrl", reqUrl)
+                const res = await fetch(reqUrl, { method: 'GET' });
+                console.log(res)
                 const result = await res.json();
-                if (res.OK) {
+                if (res.ok) {
+                    console.log(result.data)
                     setThreads(result.data);
                 } else {
                     alert(result.message);
@@ -23,9 +27,12 @@ const ThreadList = (props) => {
         };
         loadThreads();
     }, [])
-    const rows = threads.map((thread, index) => (
-        <Row key={index} thread={thread} />
-    ));
+    const rows = threads.map((thread, index) => {
+        console.log(thread, index)
+        return (
+            <Row key={index} thread={thread} />
+        )
+    });
     return (
         <Table striped bordered hover>
             <thead>
@@ -51,8 +58,8 @@ const Row = (props) => {
     return (
         <tr>
             <td>{thread.title}</td>
-            <td>{thread.author}</td>
-            <td>{new Date(thread.posttime).toLocaleTimeString()}</td>
+            <td>{thread.author.username || "unknwon"}</td>
+            <td>{new Date(thread.posttime).toLocaleString()}</td>
             {/* <td><button onClick={() => setClick(click + 1)}>{click}</button></td>
             <td><button onClick={() => handleFav(fav ? setFav(false) : setFav(true))}>{fav ? 'Unfav' : 'Fav'}</button></td> */}
         </tr>

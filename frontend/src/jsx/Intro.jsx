@@ -36,13 +36,14 @@ const Demo = () => {
 
 const Slogan = () => {
     return (
-        <div>
+        <Jumbotron>
             <h1>FlyBBS</h1>
             <p>
                 Welcome to FlyBBS
-                Let's speak whatever you want!
+                <br />
+                Speak whatever you wanna to!
             </p>
-        </div>
+        </Jumbotron>
     )
 }
 export default Intro;

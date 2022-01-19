@@ -11,10 +11,8 @@ const SettingForm = (props) => {
             const reqUrl = `${HOST}:${PORT}/api/users/${username}`;
             const res = await fetch(reqUrl, {
                 method: 'GET',
-                headers: { 'Conten-Type': 'application/json' },
-                body: JSON.stringify(body),
             });
-            const result = res.json();
+            const result = await res.json();
             if (res.ok) {
                 setSettings(result.data);
             } else {
@@ -28,7 +26,7 @@ const SettingForm = (props) => {
 
     const handleSetting = (e) => {
         e.preventDefault();
-        const form = document.forms.loginForm;
+        const form = document.forms.settingForm;
         const description = form.description.value;
         const body = { description };
         setting(body);
@@ -58,12 +56,12 @@ const SettingForm = (props) => {
         <Form id="settingForm">
             <Form.Group controlId="description">
                 <Form.Label>Personal introduction</Form.Label>
-                <Form.Control type="text" placeholder="Please input some words"></Form.Control>
+                <Form.Control type="text" placeholder="Please input some words" defaultValue={settings.description}></Form.Control>
             </Form.Group>
             <Form.Group controlId="uploader">
                 <Form.Label>Avatar</Form.Label>
-                <img src={settings.avatar ? `upload/${settings.avarar}` : 'img/avatar.png'} alt='avatar' className="rounder img-thumbnail" />
-                <Form.Control type="password" placeholder="Please input password" />
+                <img src={settings.avatar ? `${HOST}:${PORT}/upload/${settings.avatar}` : 'img/avatar.png'} alt='avatar' className="rounder img-thumbnail" />
+                <Form.Control type="file" placeholder='Please upload your avatar' />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={e => handleSetting(e)}>OK</Button>
         </Form>

@@ -1,7 +1,10 @@
 import { HOST, PORT } from '../config'
 import React, { useState, useEffect } from 'react';
-// import Media from 'react-bootstrap/Media';
-const Media = () => <div></div>;
+import Media from 'react-bootstrap/Media';
+// const Media = () => {
+//     const Body = ()=><div></div>;
+//     return (<div></div>);
+// };
 const Thread = (props) => {
     const { tid } = props;
     const [thread, setThread] = useState({});
@@ -9,7 +12,7 @@ const Thread = (props) => {
     useEffect(() => {
         const loadThread = async () => {
             try {
-                const res = await fetch(`${HOST}:${PORT}/api/threds/${tid}`);
+                const res = await fetch(`${HOST}:${PORT}/api/threads/${tid}`);
                 const result = await res.json();
                 if (res.ok) {
                     setThread(result.data.thread);
@@ -73,10 +76,11 @@ const UserCard = (props) => {
     const { author } = props;
     return (
         <div>
+            name
             <img width={64}
                 height={64}
                 className='mr-3 img-thumbnail round'
-                src={author.avatar ? `/upload/${author.avatar}` : '/img/avatar.png'}
+                src={author.avatar ? `${HOST}:${PORT}/upload/${author.avatar}` : '/img/avatar.png'}
                 alt={author.username} />
             <br />
             <center>{author.username}</center>

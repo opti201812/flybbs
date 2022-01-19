@@ -40,7 +40,7 @@ const ProfileInfo = (props) => {
             <Card.Header>Personal Info</Card.Header>
             <Card.Img
                 variant="top"
-                src={user.avatar ? `/upload/${user.avatar}` : 'img/avatar.png'}
+                src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : 'img/avatar.png'}
                 className="rounded img-thumbnail" />
             <Card.Body>
                 <Card.Title>User name</Card.Title>

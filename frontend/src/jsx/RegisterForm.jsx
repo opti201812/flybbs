@@ -6,7 +6,7 @@ const RegisterForm = (props) => {
 
     const handelRegister = (e) => {
         e.preventDefault();
-        const form = document.forms.registerFoem;
+        const form = document.forms.registerForm;
         const username = form.username.value;
         const password = form.password.value;
         const confirmpass = form.password.value;
@@ -15,7 +15,7 @@ const RegisterForm = (props) => {
     }
 
     const register = async (body) => {
-        const reqUrl = `${HOST}:${PORT}/api/users`;
+        const reqUrl = `${HOST}:${PORT}/api/users/new`;
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',

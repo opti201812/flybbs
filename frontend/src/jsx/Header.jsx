@@ -46,17 +46,19 @@ const Header = () => {
         } catch (error) {
             alert(error.message);
         }
-    }
-    const Avatar = () => {
+    };
+
+    const Avatar = () => (
         <div>
-            <img src={user.avatar ? `/upload/${user.avatar}` : 'img/avatar.png'}
+            <img src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : 'img/avatar.png'}
                 alt='avatar'
                 width={32}
                 height={32}
                 className='rounded' />
             <span style={{ color: 'white' }} onClick={() => logout()}>Exit</span>
         </div>
-    }
+    );
+
     return (
         <Navbar bg="primary" variant="dark" expand="lg">
             <Navbar.Brand href="#">FlyBBS</Navbar.Brand>

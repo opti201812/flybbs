@@ -11,7 +11,7 @@ const ModifyForm = (props) => {
         const loadThread = async () => {
             try {
                 const res = await fetch(reqUrl, { method: 'GET' });
-                const result = res.json();
+                const result = await res.json();
                 if (res.ok) {
                     setTitle(result.data.thread.title);
                     setContent(result.data.thread.content);
@@ -66,7 +66,7 @@ const ModifyButton = (props) => {
 
     const handleModify = async () => {
         const { username, token } = JSON.parse(await localStorage.getItem(DOMAIN));
-        const form = document.forms.ModifyForm;
+        const form = document.forms.modifyForm;
         const title = form.title.value;
         const content = form.content.value;
         const body = {
