@@ -52,10 +52,26 @@ mongoose.connect(DB, (err) => {
     //     })
     // });
 
+    
+    // app.listen(3030);
+    // 解决跨域问题
+    app.all("/*", function (req, res, next) {
+        // 跨域处理
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization");
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,PATCH,OPTIONS");
+        res.header("X-Powered-By", ' 3.2.1');
+        res.header("Content-Type", "application/json;charset=utf-8");
+        next(); // 执行下一个路由
+    })
+    // app.get('/all', function (req, res) {
+    //     console.log(req.url);
+    //     res.send(req.query);
+    // })
     users.apis(app);
     threads.apis(app);
-    
-    app.listen(3000);
-
+    app.listen(3030, function () {
+        console.log("Listen: ", 3030);
+    })
 })
 

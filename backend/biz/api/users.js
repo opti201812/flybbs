@@ -187,7 +187,11 @@ const apis = (app) => {
             };
             if (req.file) {
                 user.avatar = req.file.filename;
+            }
+            if (description) {
                 user.description = description;
+            }
+            if (req.file || description) {
                 await user.save();
             }
             return res.json(ERROR_CODE_MESSAGE.USER_OK);
@@ -198,7 +202,7 @@ const apis = (app) => {
         }
     })
 
-    app.get('/api/user/:username', async (req, res) => {
+    app.get('/api/users/:username', async (req, res) => {
         const formError = (errEntity) => errResult(res, errEntity.code, errEntity.message);
         try {
             console.log(req.params)

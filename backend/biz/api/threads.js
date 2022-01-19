@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Thread = require('../model/Thread')
 const Comment = require('../model/Comment')
 const User = require('../model/User');
-const {errResult, ERROR_CODE_MESSAGE} = require('./commonError');
+const { errResult, ERROR_CODE_MESSAGE } = require('./commonError');
 const bodyParser = require('body-parser');
 const Crypto = require('crypto');
 const multer = require('multer');
@@ -101,8 +101,10 @@ const apis = (app) => {
             }
             const comments = await Comment.find({ target: tid }).populate('author', 'username avatar deescription')
             return res.json({
-                thread: thread,
-                comments: comments,
+                data: {
+                    thread: thread,
+                    comments: comments,
+                }
             });
         } catch (error) {
             return res.status(400).json({ message: error.message });
