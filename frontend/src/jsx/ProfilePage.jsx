@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { HOST, PORT } from '../config';
 import { Container, Card, ListGroup, Row, Col } from "react-bootstrap";
 import UserInfo from "./UserInfo";
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
     const { username } = props.match.params;
     return (
         <Container>

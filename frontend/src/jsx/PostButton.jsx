@@ -17,7 +17,7 @@ const PostForm = () => {
     )
 };
 
-const PostButton = () => {
+const PostButton = (props) => {
     const [show, setShow] = useState(false);
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);

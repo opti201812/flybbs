@@ -4,7 +4,6 @@ import Media from 'react-bootstrap/Media';
 
 const Thread = (props) => {
     const { tid, thread, loadThread} = props;
-    const [thread, setThread] = useState({});
     const [comments, setComments] = useState([]);
     useEffect(() => {
         loadThread();
@@ -63,7 +62,7 @@ const UserCard = (props) => {
             <img width={64}
                 height={64}
                 className='mr-3 img-thumbnail round'
-                src={author.avatar ? `${HOST}:${PORT}/upload/${author.avatar}` : '/img/avatar.png'}
+                src={author.avatar ? `${HOST}:${PORT}/upload/${author.avatar}` : `${HOST}:${PORT}/img/avatar.png`}
                 alt={author.username} />
             <br />
             <center>{author.username}</center>

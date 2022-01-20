@@ -1,5 +1,7 @@
 import React from 'react';
 import { Carousel,Jumbotron } from 'react-bootstrap';
+import { HOST, PORT } from '../config';
+
 const Intro = () => {
     return (
         <div>
@@ -14,7 +16,7 @@ const Demo = () => {
         <Carousel>
             <Carousel.Item>
                 <img className='d-block w-100'
-                    src="/img/demo1.jpg"
+                    src={`${HOST}:${PORT}/img/demo1.jpg`}
                     alt="First slide" />
                 <Carousel.Caption>
                     <h3>Sun</h3>
@@ -23,7 +25,7 @@ const Demo = () => {
             </Carousel.Item>
             <Carousel.Item>
                 <img className='d-block w-100'
-                    src="/img/demo1.jpg"
+                    src={`${HOST}:${PORT}/img/demo1.jpg`}
                     alt="First slide" />
                 <Carousel.Caption>
                     <h3>Moon</h3>

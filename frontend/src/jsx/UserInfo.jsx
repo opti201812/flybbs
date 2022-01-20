@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, ListGroup, Row, Col } from "react-bootstrap";
+import { Card, ListGroup, Row, Col } from "react-bootstrap";
 import { HOST, PORT } from '../config';
 
 const UserInfo = (props) => {

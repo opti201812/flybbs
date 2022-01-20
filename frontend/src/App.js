@@ -11,13 +11,13 @@ function App() {
   return (
     <div>
       <Header />
-      <Switch>
+      {/* <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/threads" component={ThreadListPage} />
         <Route path="/profile/:username" component={ProfilePage} />
         <Route path="/setting" component={SettingPage} />
-      </Switch>
+      </Switch> */}
       <Footer />
     </div>
   );

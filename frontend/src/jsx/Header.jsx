@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
-import { LinkContainr } from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { withRouter } from 'react-router-dom';
 
-const Header = () => {
+const Header = (props) => {
     const { history } = props;
     const [user, setUser] = useState([]);
     const [auth, setAuth] = useState([]);
@@ -69,19 +69,19 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav' >
                 <Nav className="mr-auto">
-                    <LinkContainr to="/home/">
+                    <LinkContainer to="/home/">
                         <Nav.Link>Home</Nav.Link>
-                    </LinkContainr>
-                    <LinkContainr to="/threads">
+                    </LinkContainer>
+                    <LinkContainer to="/threads">
                         <Nav.Link>Threads</Nav.Link>
-                    </LinkContainr>
+                    </LinkContainer>
                     <NavDropdown title="Personal Center" id="basic-nav-dropdown">
-                        <LinkContainr to={`/profile/${user.username}`} >
+                        <LinkContainer to={`/profile/${user.username}`} >
                             <NavDropdown.Item>Personal Info</NavDropdown.Item>
-                        </LinkContainr>
-                        <LinkContainr to="/setting/" >
+                        </LinkContainer>
+                        <LinkContainer to="/setting/" >
                             <NavDropdown.Item>Modify Info</NavDropdown.Item>
-                        </LinkContainr>
+                        </LinkContainer>
                     </NavDropdown>
                 </Nav>
                 <div className='m1-auto'>

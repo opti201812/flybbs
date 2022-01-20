@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import PostButton from "./PostButton";
 import ThreadList from "./ThreadList";
-import {Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import ThreadPage from "./ThreadPage";
+import { HOST, PORT } from '../config';
 
-const ThreadListTable = ()=> {
+const ThreadListTable = () => {
     const [threads, setThreads] = useState([]);
     const loadThreads = async () => {
         const reqUrl = `${HOST}:${PORT}/api/threads`;
@@ -24,10 +25,10 @@ const ThreadListTable = ()=> {
 
     <Container>
         <PostButton loadThreads={loadThreads} />
-        <ThreadList loadThreads={loadThreads} threads={threads}/>
+        <ThreadList loadThreads={loadThreads} threads={threads} />
     </Container>
 };
-const ThreadListPage = () =>{
+const ThreadListPage = () => {
     <Switch>
         <Route exact path="/threads" component={ThreadListTable} />
         <Route exact path="/threads/:tid" component={ThreadPage} />
