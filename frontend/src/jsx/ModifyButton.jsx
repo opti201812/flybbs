@@ -41,7 +41,7 @@ const ModifyForm = (props) => {
 };
 
 const ModifyButton = (props) => {
-    const { tid } = props;
+    const { tid, loadThread } = props;
     const [show, setShow] = useState(false);
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);
@@ -58,6 +58,7 @@ const ModifyButton = (props) => {
             alert(result.message);
             if (res.ok) {
                 closeModal();
+                loadThread(); 
             }
         } catch (error) {
             alert(error.message);

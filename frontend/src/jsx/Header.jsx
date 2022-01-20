@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
+import { LinkContainr } from 'react-router-bootstrap';
+import { withRouter } from 'react-router-dom';
 
 const Header = () => {
+    const { history } = props;
     const [user, setUser] = useState([]);
     const [auth, setAuth] = useState([]);
 
@@ -42,6 +45,7 @@ const Header = () => {
             if (res.ok) {
                 setAuth(false);
                 setUser({});
+                history.push("/");
             }
         } catch (error) {
             alert(error.message);
@@ -65,11 +69,19 @@ const Header = () => {
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav' >
                 <Nav className="mr-auto">
-                    <Nav.Link href="#">Home</Nav.Link>
-                    <Nav.Link href="#">Threads</Nav.Link>
+                    <LinkContainr to="/home/">
+                        <Nav.Link>Home</Nav.Link>
+                    </LinkContainr>
+                    <LinkContainr to="/threads">
+                        <Nav.Link>Threads</Nav.Link>
+                    </LinkContainr>
                     <NavDropdown title="Personal Center" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#">Personal Info</NavDropdown.Item>
-                        <NavDropdown.Item href="#">Modify Info</NavDropdown.Item>
+                        <LinkContainr to={`/profile/${user.username}`} >
+                            <NavDropdown.Item>Personal Info</NavDropdown.Item>
+                        </LinkContainr>
+                        <LinkContainr to="/setting/" >
+                            <NavDropdown.Item>Modify Info</NavDropdown.Item>
+                        </LinkContainr>
                     </NavDropdown>
                 </Nav>
                 <div className='m1-auto'>
@@ -80,4 +92,4 @@ const Header = () => {
     );
 }
 
-export default Header;
+export default withRouter(Header);

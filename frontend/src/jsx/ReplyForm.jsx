@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 const ReplyForm = (props) => {
-    const { tid } = props;
+    const { tid, loadThread } = props;
     const reqUrl = `${HOST}:${PORT}/api/comments/${tid}`;
     const reply = async (body) => {
         try {
@@ -14,6 +14,10 @@ const ReplyForm = (props) => {
             })
             const result = await res.json();
             alert(result.message);
+            if (res.ok) {
+                loadThread();
+                document.forms.replyForm.content.value = '';
+            }
         } catch (error) {
             alert(error.message);
         }

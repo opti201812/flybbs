@@ -36,7 +36,7 @@ const Demo = () => {
 
 const Slogan = () => {
     return (
-        <Jumbotron>
+        <Jumbotron className="flex-fill m-0">
             <h1>FlyBBS</h1>
             <p>
                 Welcome to FlyBBS
@@ -46,4 +46,5 @@ const Slogan = () => {
         </Jumbotron>
     )
 }
+export { Demo, Slogan };
 export default Intro;

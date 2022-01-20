@@ -24,6 +24,7 @@ const PostButton = () => {
 
     const post = async (body) => {
         const reqUrl = `${HOST}:${PORT}/api/threads`;
+        const { loadThreads } = props;
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',
@@ -32,7 +33,10 @@ const PostButton = () => {
             });
             const result = await res.json();
             alert(result.message);
-            if (res.ok) closeModal();
+            if (res.ok) {
+                closeModal();
+                loadThreads();
+            }
         } catch (error) {
             alert(error.message);
         }

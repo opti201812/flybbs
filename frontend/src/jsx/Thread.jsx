@@ -1,29 +1,12 @@
 import { HOST, PORT } from '../config'
 import React, { useState, useEffect } from 'react';
 import Media from 'react-bootstrap/Media';
-// const Media = () => {
-//     const Body = ()=><div></div>;
-//     return (<div></div>);
-// };
+
 const Thread = (props) => {
-    const { tid } = props;
+    const { tid, thread, loadThread} = props;
     const [thread, setThread] = useState({});
     const [comments, setComments] = useState([]);
     useEffect(() => {
-        const loadThread = async () => {
-            try {
-                const res = await fetch(`${HOST}:${PORT}/api/threads/${tid}`);
-                const result = await res.json();
-                if (res.ok) {
-                    setThread(result.data.thread);
-                    setComments(result.data.comments);
-                } else {
-                    alert(result.message);
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        };
         loadThread();
     }, []);
 

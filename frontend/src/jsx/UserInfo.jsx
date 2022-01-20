@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Container, Card, ListGroup, Row, Col } from "react-bootstrap";
 import { HOST, PORT } from '../config';
 
 const UserInfo = (props) => {
@@ -26,10 +26,14 @@ const UserInfo = (props) => {
         getUser();
     }, []);//eslint-disable-line react-hooks/exhaustive-deps
     return (
-        <div>
-            <ProfileInfo user={user} />
-            <ThreadsInfo threads={threads} />
-        </div>
+        <Row>
+            <Col sm={12} md={4}>
+                <ProfileInfo user={user} />
+            </Col>
+            <Col sm={12} md={8}>
+                <ThreadsInfo threads={threads} />
+            </Col>
+        </Row>
     );
 }
 
