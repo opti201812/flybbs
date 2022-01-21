@@ -2,10 +2,12 @@ import { HOST, PORT, DOMAIN } from '../config'
 import React, { useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { userContext } from '../App';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/users/login`;
     const { setUser, setAuth } = useContext(userContext);
+    const navigate = useNavigate();
 
     const login = async (body) => {
         try {
@@ -21,6 +23,7 @@ const LoginForm = (props) => {
                 localStorage.setItem(DOMAIN, JSON.stringify(data));
                 setAuth(true);
                 setUser({ username: result.data.username });
+                navigate("/threads");
             } else {
                 alert(result.message);
             }

@@ -6,9 +6,11 @@ import Thread from "./Thread";
 import ReplyForm from "./ReplyForm";
 import ModifyButton from "./ModifyButton";
 import DeleteButton from "./DeleteButton";
+import { useParams } from 'react-router-dom';
 
 const ThreadPage = (props) => {
-    const { tid } = props.match.params;
+    const params = useParams();
+    const { tid } = params;
     const [thread, setThread] = useState({});
     const [comments, setComments] = useState([]);
     const { user, auth } = useContext(userContext);
@@ -20,6 +22,7 @@ const ThreadPage = (props) => {
             if (res.ok) {
                 setThread(result.data.thread);
                 setComments(result.data.comments);
+                console.log(thread);
             } else {
                 alert(result.message);
             }
@@ -30,7 +33,7 @@ const ThreadPage = (props) => {
 
     return (
         <Container>
-            {thread.author && user.username === thread.authro.username ?
+            {thread.author && user.username === thread.author.username ?
                 <Row className="m-0">
                     <ButtonGroup className="m1-auto">
                         <ModifyButton tid={tid} loadThread={loadThread} />

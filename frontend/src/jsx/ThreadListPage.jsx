@@ -37,7 +37,7 @@ const ThreadListTable = () => {
 const ThreadListPage = () => (
     <Routes>
         <Route exact path="/" element={<ThreadListTable />} />
-        <Route exact path="/:tid" element={<ThreadPage />} />
+        <Route exact path=":tid" element={<ThreadPage />} />
     </Routes>
 );
 

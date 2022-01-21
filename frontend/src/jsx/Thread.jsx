@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Media from 'react-bootstrap/Media';
 
 const Thread = (props) => {
-    const { tid, thread, loadThread} = props;
-    const [comments, setComments] = useState([]);
+    const { thread, comments, loadThread} = props;
     useEffect(() => {
         loadThread();
     }, []);

@@ -57,7 +57,7 @@ const ERROR_CODE_MESSAGE = {
     },
     'THREAD_NOTAUTHOR': {
         'code': '0x00020005',
-        'message': 'No author',
+        'message': 'Origin author only',
     },
     // '': {
     //     'code': '0x00010009',
