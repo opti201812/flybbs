@@ -1,8 +1,10 @@
 import { HOST, PORT } from '../config'
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { userContext } from '../App';
 
 const RegisterForm = (props) => {
+    const { setAuth } = useContext(userContext);
 
     const handelRegister = (e) => {
         e.preventDefault();
@@ -26,6 +28,10 @@ const RegisterForm = (props) => {
             const result = await res.json();
 
             alert(result.message);
+            if (res.ok) {   // Registered consider as login ok.
+                setAuth(true);
+                setUser({ username: body.username });
+            }
         } catch (error) {
             alert(error.message);
         }

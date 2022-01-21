@@ -1,9 +1,12 @@
 import { HOST, PORT, DOMAIN } from '../config'
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { userContext } from '../App';
 
 const LoginForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/users/login`;
+    const { setUser, setAuth } = useContext(userContext);
+
     const login = async (body) => {
         try {
             const res = await fetch(reqUrl, {
@@ -16,6 +19,8 @@ const LoginForm = (props) => {
                 alert(result.message);
                 const data = { username: result.data.username, token: result.data.token };
                 localStorage.setItem(DOMAIN, JSON.stringify(data));
+                setAuth(true);
+                setUser({ username: result.data.username });
             } else {
                 alert(result.message);
             }

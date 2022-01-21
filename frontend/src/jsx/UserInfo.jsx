@@ -24,7 +24,7 @@ const UserInfo = (props) => {
             }
         };
         getUser();
-    }, []);//eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <Row>
             <Col sm={12} md={4}>
@@ -44,7 +44,7 @@ const ProfileInfo = (props) => {
             <Card.Header>Personal Info</Card.Header>
             <Card.Img
                 variant="top"
-                src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : 'img/avatar.png'}
+                src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`}
                 className="rounded img-thumbnail" />
             <Card.Body>
                 <Card.Title>User name</Card.Title>

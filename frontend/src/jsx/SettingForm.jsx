@@ -60,7 +60,7 @@ const SettingForm = (props) => {
             </Form.Group>
             <Form.Group controlId="uploader">
                 <Form.Label>Avatar</Form.Label>
-                <img src={settings.avatar ? `${HOST}:${PORT}/upload/${settings.avatar}` : 'img/avatar.png'} alt='avatar' className="rounder img-thumbnail" />
+                <img src={settings.avatar ? `${HOST}:${PORT}/upload/${settings.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`} alt='avatar' className="rounder img-thumbnail" />
                 <Form.Control type="file" placeholder='Please upload your avatar' />
             </Form.Group>
             <Button variant="primary" type="submit" onClick={e => handleSetting(e)}>OK</Button>

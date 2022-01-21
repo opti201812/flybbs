@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';   // O.V.
 
 const DeleteButton = (props) => {
     const { tid, history } = props;
@@ -38,4 +38,5 @@ const DeleteButton = (props) => {
     )
 };
 
-export default withRouter(DeleteButton);
+// export default withRouter(DeleteButton); //O.V.
+export default DeleteButton;

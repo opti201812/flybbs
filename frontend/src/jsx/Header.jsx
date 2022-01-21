@@ -1,35 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { userContext } from '../App';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
 import { LinkContainer } from 'react-router-bootstrap';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';   //O.V.
 
 const Header = (props) => {
     const { history } = props;
-    const [user, setUser] = useState([]);
-    const [auth, setAuth] = useState([]);
-
-    useEffect(() => {
-        const authenticate = async () => {
-            try {
-                const data = localStorage.getItem(DOMAIN);
-                const url = `${HOST}:${PORT}/api/users/auth`;
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: data,
-                });
-                const result = await res.json();
-                if (res.ok) {
-                    setAuth(true);
-                    setUser(result.data);
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        };
-        authenticate();
-    }, []);
+    const { user, setUser, auth, setAuth } = useContext(userContext);
 
     const logout = async () => {
         const url = `${HOST}:${PORT}/api/users/logout`;
@@ -54,7 +32,7 @@ const Header = (props) => {
 
     const Avatar = () => (
         <div>
-            <img src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : 'img/avatar.png'}
+            <img src={user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`}
                 alt='avatar'
                 width={32}
                 height={32}
@@ -75,14 +53,16 @@ const Header = (props) => {
                     <LinkContainer to="/threads">
                         <Nav.Link>Threads</Nav.Link>
                     </LinkContainer>
-                    <NavDropdown title="Personal Center" id="basic-nav-dropdown">
-                        <LinkContainer to={`/profile/${user.username}`} >
-                            <NavDropdown.Item>Personal Info</NavDropdown.Item>
-                        </LinkContainer>
-                        <LinkContainer to="/setting/" >
-                            <NavDropdown.Item>Modify Info</NavDropdown.Item>
-                        </LinkContainer>
-                    </NavDropdown>
+                    {auth ?
+                        <NavDropdown title="Personal Center" id="basic-nav-dropdown">
+                            <LinkContainer to={`/profile/${user.username}`} >
+                                <NavDropdown.Item>Personal Info</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/setting/" >
+                                <NavDropdown.Item>Modify Info</NavDropdown.Item>
+                            </LinkContainer>
+                        </NavDropdown>
+                        : null}
                 </Nav>
                 <div className='m1-auto'>
                     {auth ? <Avatar /> : null}
@@ -92,4 +72,5 @@ const Header = (props) => {
     );
 }
 
-export default withRouter(Header);
+// export default withRouter(Header);   //O.V.
+export default Header;

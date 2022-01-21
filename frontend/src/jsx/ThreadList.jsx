@@ -38,11 +38,11 @@ const Row = (props) => {
     return (
         <tr>
             <td>
-                <Link to={`/threads/${thread.id}`}>{thread.title}</Link>
+                <Link to={`/threads/${thread._id}`}>{thread.title}</Link>
             </td>
-            {/* <td>{thread.title}</td>
+            {/* <td>{thread.title}</td> */}
             <td>{thread.author.username || "unknwon"}</td>
-            <td>{new Date(thread.posttime).toLocaleString()}</td> */}
+            <td>{new Date(thread.posttime).toLocaleString()}</td>
         </tr>
     )
 }
