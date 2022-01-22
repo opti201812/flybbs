@@ -1,17 +1,19 @@
-import { app } from 'electron';
+import { app, Menu } from 'electron';
 import createWindow from './createWindow';
+import menu from './menu';
 
-app.on('ready', ()=>{
+app.on('ready', () => {
     createWindow();
+    Menu.setApplicationMenu(menu);
 });
 
-app.on('window-all-closed', ()=>{
+app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
 });
 
-app.on('activate', (_e, hasVisibleWindow)=>{
+app.on('activate', (_e, hasVisibleWindow) => {
     if (!hasVisibleWindow) {
         createWindow();
     }

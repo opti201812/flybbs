@@ -14,5 +14,5 @@ const createWindow = () => {
     win.on('closed', () => { win = null });
 };
 
-export {win};
+export { win };
 export default createWindow;
