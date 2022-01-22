@@ -99,7 +99,7 @@ const apis = (app) => {
             if (!thread) {
                 return formError(ERROR_CODE_MESSAGE.THREAD_NOEXIST);
             }
-            const comments = await Comment.find({ target: tid }).populate('author', 'username avatar deescription')
+            const comments = await Comment.find({ target: tid }).populate('author', 'username avatar description')
             return res.json({
                 data: {
                     thread: thread,
