@@ -24,7 +24,7 @@ const ModifyForm = (props) => {
         };
 
         loadThread();
-    }, []);//eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Form id="modifyForm">

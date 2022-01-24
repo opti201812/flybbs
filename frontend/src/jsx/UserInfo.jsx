@@ -25,6 +25,7 @@ const UserInfo = (props) => {
         };
         getUser();
     }, []);
+
     return (
         <Row>
             <Col sm={12} md={4}>

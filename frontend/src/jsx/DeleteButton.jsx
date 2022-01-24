@@ -2,9 +2,12 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
 // import { withRouter } from 'react-router-dom';   // O.V.
+import { useNavigate } from 'react-router-dom';
 
 const DeleteButton = (props) => {
     const { tid, history } = props;
+    const navigate = useNavigate();
+
     const handle = async (body) => {
         try {
             const res = await fetch(`${HOST}:${PORT}/api/threads/${tid}`, {
@@ -16,7 +19,8 @@ const DeleteButton = (props) => {
             const result = await res.json();
             alert(result.message);
             if (res.ok) {
-                history.push("/threads")
+                // history.push("/threads")
+                navigate("/threads");
             }
         } catch (error) {
             alert(error.message);

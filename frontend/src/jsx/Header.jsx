@@ -4,10 +4,12 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
 import { LinkContainer } from 'react-router-bootstrap';
 // import { withRouter } from 'react-router-dom';   //O.V.
+import { useNavigate } from 'react-router-dom';
 
 const Header = (props) => {
     const { history } = props;
     const { user, setUser, auth, setAuth } = useContext(userContext);
+    const navigate = useNavigate();
 
     const logout = async () => {
         const url = `${HOST}:${PORT}/api/users/logout`;
@@ -23,7 +25,7 @@ const Header = (props) => {
             if (res.ok) {
                 setAuth(false);
                 setUser({});
-                history.push("/");
+                navigate("/");
             }
         } catch (error) {
             alert(error.message);

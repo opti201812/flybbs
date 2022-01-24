@@ -1,5 +1,5 @@
 import React,{ createContext, useEffect, useState} from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { HOST, PORT, DOMAIN } from './config';
 import Intro from './jsx/Intro';
 import Footer from './jsx/Footer';
@@ -19,6 +19,7 @@ const userContext = createContext({
 function App() {
   const [user, setUser] = useState({});
   const [auth, setAuth] = useState(false);
+  const navigate = useNavigate();
 
   const authenticate = async () => {
     try {
@@ -40,6 +41,7 @@ function App() {
       } else {
         setAuth(false);
         console.warn("Auth faile. ", result.message);
+        navigate("/");
       }
     } catch (error) {
       alert(error.message);
@@ -50,7 +52,7 @@ function App() {
     authenticate();
   }, []);
   return (
-    <userContext.Provider value={{ user, setUser, auth, setAuth }}>
+    <userContext.Provider value={{ user, setUser, auth, setAuth }}  role={"main"} className="flex-shrink-0">
       <Header />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
