@@ -39,20 +39,20 @@ const RegisterForm = (props) => {
 
     return (
         <Form id="registerForm">
-            <Form.Group controlId="username">
+            <Form.Group controlId="username" className="mt-1">
                 <Form.Label>Username</Form.Label>
                 <Form.Control type="text" placeholder='Please input user name'></Form.Control>
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" className="mt-2">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" placeholder="Please input password">
                 </Form.Control>
             </Form.Group>
-            <Form.Group controlId="confirmpass">
-                <Form.Label>Confirm password</Form.Label>
+            <Form.Group controlId="confirmpass" className="mt-2">
+                <Form.Label className=''>Confirm password</Form.Label>
                 <Form.Control type="password" placeholder="Plese retype the password" ></Form.Control>
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={(e) => handelRegister(e)}>Register</Button>
+            <Button variant="primary" type="submit" onClick={(e) => handelRegister(e)} className="mt-2">Register</Button>
         </Form>
     );
 }

@@ -13,10 +13,11 @@ const ReplyForm = (props) => {
                 body: JSON.stringify(body),
             })
             const result = await res.json();
-            alert(result.message);
             if (res.ok) {
                 loadThread();
                 document.forms.replyForm.content.value = '';
+            } else {
+                alert(result.message);
             }
         } catch (error) {
             alert(error.message);

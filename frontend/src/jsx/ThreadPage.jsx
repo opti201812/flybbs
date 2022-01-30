@@ -22,7 +22,6 @@ const ThreadPage = (props) => {
             if (res.ok) {
                 setThread(result.data.thread);
                 setComments(result.data.comments);
-                console.log(thread);
             } else {
                 alert(result.message);
             }

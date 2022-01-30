@@ -9,7 +9,7 @@ const RegLogForm = () => {
     const [mode, setMode] = useState('login');
 
     return (
-        <Tabs id="homeTabs" activeKey={mode} onSelect={mode=>setMode(mode)}>
+        <Tabs id="homeTabs" activeKey={mode} onSelect={mode=>setMode(mode)} className="pt-1">
             <Tab eventKey="login" title="Login">
                 <LoginForm />
             </Tab>

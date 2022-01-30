@@ -18,7 +18,7 @@ const LoginForm = (props) => {
             });
             const result = await res.json();
             if (res.ok) {
-                alert(result.message);
+                // alert(result.message);
                 const data = { username: result.data.username, token: result.data.token };
                 localStorage.setItem(DOMAIN, JSON.stringify(data));
                 setAuth(true);
@@ -42,15 +42,15 @@ const LoginForm = (props) => {
     }
     return (
         <Form id="loginForm">
-            <Form.Group controlId="username">
+            <Form.Group controlId="username" className="mt-2">
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="text" placeholder="Please input user name"></Form.Control>
+                <Form.Control type="text" placeholder="Please input user name"  />
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" className="mt-2">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Please input password" />
+                <Form.Control type="password" placeholder="Please input password" autocomplete="new-password"/>
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={e => handleLogin(e)}>Login</Button>
+            <Button variant="primary" type="submit" onClick={e => handleLogin(e)} className="mt-2">Login</Button>
         </Form>
     );
 }

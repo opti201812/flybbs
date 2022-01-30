@@ -21,11 +21,12 @@ const Header = (props) => {
                 body: JSON.stringify(data),
             })
             const result = await res.json();
-            alert(result.message);
             if (res.ok) {
                 setAuth(false);
                 setUser({});
                 navigate("/");
+            } else {
+                alert(result.message);
             }
         } catch (error) {
             alert(error.message);
@@ -44,8 +45,8 @@ const Header = (props) => {
     );
 
     return (
-        <Navbar bg="primary" variant="dark" expand="lg">
-            <Navbar.Brand href="#">FlyBBS</Navbar.Brand>
+        <Navbar bg="primary" variant="dark" expand="lg" className="ml-2">
+            <Navbar.Brand href="#" className="ml-5">FlyBBS</Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav' >
                 <Nav className="mr-auto">
