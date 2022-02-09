@@ -34,6 +34,7 @@ const apis = (app) => {
                 title: title,
                 content: content,
                 author: user,
+                posttime: Date.now(),
             };
             const thread = new Thread(newThread);
             await thread.save();
@@ -68,6 +69,7 @@ const apis = (app) => {
                 content: content,
                 author: user,
                 target: tid,
+                posttime: Date.now(),
             };
             const comment = new Comment(newComment);
             await comment.save();
