@@ -57,14 +57,13 @@ const UserCard = (props) => {
     const { author } = props;
     return (
         <div>
-            name
-            <img width={64}
-                height={64}
+            <img width={32}
+                height={32}
                 className='mr-3 img-thumbnail round'
-                src={author.avatar ? `${HOST}:${PORT}/upload/${author.avatar}` : `${HOST}:${PORT}/img/avatar.png`}
+                src={author.avatar ? `${HOST}:${PORT}/upload/${author.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`}
                 alt={author.username} />
-            <br />
-            <center>{author.username}</center>
+            {/* <br /> */}
+            <span style={{marginLeft:0.5+'rem'}}>{author.username}</span>
         </div>
     )
 }
@@ -79,7 +78,7 @@ const ContentCard = (props) => {
             </p>
             <p className='d-flex justify-content-end text-muted'>
                 <small>
-                    published on {new Date(floor.posttime).toLocaleString()}
+                    {new Date(floor.posttime).toLocaleString()}
                 </small>
             </p>
             <hr />

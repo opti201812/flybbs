@@ -40,13 +40,13 @@ const Header = (props) => {
                 width={32}
                 height={32}
                 className='rounded' />
-            <span style={{ color: 'white' }} onClick={() => logout()}>Exit</span>
+            <span style={{ color: 'white', marginLeft: 0.5+'rem', cursor: 'pointer' }} onClick={() => logout()}>Exit</span>
         </div>
     );
 
     return (
-        <Navbar bg="primary" variant="dark" expand="lg" className="ml-2">
-            <Navbar.Brand href="#" className="ml-5">FlyBBS</Navbar.Brand>
+        <Navbar bg="primary" variant="dark" expand="lg" className="pl-2">
+            <Navbar.Brand href="#" style={{marginLeft:1+'rem'}}>FlyBBS</Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav' >
                 <Nav className="mr-auto">

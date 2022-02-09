@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel,Jumbotron } from 'react-bootstrap';
+import { Carousel, Jumbotron } from 'react-bootstrap';
 import { HOST, PORT } from '../config';
 
 const Intro = () => {
@@ -19,8 +19,8 @@ const Demo = () => {
                     src={`${HOST}:${PORT}/img/demo1.jpeg`}
                     alt="First slide" />
                 <Carousel.Caption>
-                    <h3>Sun</h3>
-                    <p>See the view together</p>
+                    <h3>Flying Team 1</h3>
+                    <p>See us</p>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -28,8 +28,17 @@ const Demo = () => {
                     src={`${HOST}:${PORT}/img/demo2.jpeg`}
                     alt="First slide" />
                 <Carousel.Caption>
-                    <h3>Moon</h3>
-                    <p>See the view together</p>
+                    <h3>Flying Team 2</h3>
+                    <p>See us</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+                <img className='d-block w-100'
+                    src={`${HOST}:${PORT}/img/demo3.jpeg`}
+                    alt="Third slide" />
+                <Carousel.Caption>
+                    <h3>Flying Team 3</h3>
+                    <p>See us</p>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
