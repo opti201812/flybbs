@@ -5,10 +5,10 @@ import menu from './menu';
 app.on('ready', () => {
     createWindow();
     Menu.setApplicationMenu(menu);
-    const item = menu.getMenuItemById('changeColor');
-    ipcMain.on('toggle', (e, msg) =>{
+    const item = menu.getMenuItemById('logout');
+    ipcMain.on('logoutMenuItem', (e, msg) =>{
         if (msg) {
-            item.enabled = !item.enabled;
+            item.enabled = msg;
         }
     });
 });

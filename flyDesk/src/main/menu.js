@@ -5,29 +5,25 @@ const sayHello = () => dialog.showMessageBox({
     message: 'Hi, BBSer!'
 });
 
-const changeColor = () => {
+const logout = () => {
     if (getWindow == null) {
         console.error("getWindow is null!")
         return;
     }
     let mainWin = getWindow();
-    if (mainWin == null) console.error("getWindow get null!")
-    mainWin.webContents.send('color', 'primary');
+    if (mainWin !== null) mainWin.webContents.send('logout', true);
+    else console.error("getWindow get null!")
 };
 
 const template = [
     {
-        label: 'Test',
+        label: 'Account',
         submenu: [
             {
-                label: 'Say HI',
-                click: sayHello,
-            },
-            {
-                label: 'Change to blue',
-                click: changeColor,
-                id: 'changeColor',
-                enable: false,
+                label: 'Logout',
+                click: logout,
+                id: 'logout',
+                enabled: false,
             },
             { type: 'separator' },
             {
