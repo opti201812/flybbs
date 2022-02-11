@@ -73,8 +73,8 @@ const ContentCard = (props) => {
     return (
         <div>
             <h5>{floor.title}</h5>
-            <p>
-                {floor.content}
+            <p dangerouslySetInnerHTML={{__html:floor.content}}>
+                {/* {floor.content} */}
             </p>
             <p className='d-flex justify-content-end text-muted'>
                 <small>

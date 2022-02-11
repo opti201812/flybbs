@@ -1,6 +1,9 @@
 import { DOMAIN, HOST, PORT } from '../config'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
+import { Editor } from '@tinymce/tinymce-react'
+
+let editorRef;
 
 const ModifyForm = (props) => {
     const { tid } = props;
@@ -33,8 +36,26 @@ const ModifyForm = (props) => {
                 <Form.Control type="text" placeholder="Please input title" defaultValue={title} />
             </Form.Group>
             <Form.Group controlId="content">
-                <Form.Label>Content</Form.Label>
-                <Form.Control as="textarea" rows="3" defaultValue={content} />
+                <Form.Label className="mt-3">Content</Form.Label>
+                <p class="text-muted" style={{'fontSize':'10px'}}>(max size: 2MB)</p>
+                <Editor
+                    initialValue={content.toString()}
+                    onInit={(evt, editor) => editorRef.current = editor}
+                    id={"tincyEditorModify"}
+                    apiKey="ptr6mblaq31o1ghf2979iusmzxd367ds7xtdoukeb5r3wbuf"
+                    init={{
+                        language: 'en',
+                        menubar: false,
+                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave autoresize formatpainter',
+                        toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
+                        fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+                        images_upload_handler: (blobInfo, success, failure) => {
+                            let base64 = "data:image/png;base64," + blobInfo.base64();
+                            //uploaded image -> <img src="success params" />
+                            success(base64);
+                        }
+                    }} />
+
             </Form.Group>
         </Form>
     );
@@ -45,6 +66,7 @@ const ModifyButton = (props) => {
     const [show, setShow] = useState(false);
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);
+    editorRef = useRef(null);
 
     const modify = async (body) => {
         const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;
@@ -57,7 +79,7 @@ const ModifyButton = (props) => {
             const result = await res.json();
             if (res.ok) {
                 closeModal();
-                loadThread(); 
+                loadThread();
             } else {
                 alert(result.message);
             }
@@ -70,7 +92,7 @@ const ModifyButton = (props) => {
         const { username, token } = JSON.parse(await localStorage.getItem(DOMAIN));
         const form = document.forms.modifyForm;
         const title = form.title.value;
-        const content = form.content.value;
+        const content = editorRef.current ? editorRef.current.getContent() : "";
         const body = {
             username, token, title, content,
         };
