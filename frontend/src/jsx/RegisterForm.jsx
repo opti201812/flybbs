@@ -32,9 +32,9 @@ const RegisterForm = (props) => {
 
             alert(result.message);
             if (res.ok) {   // Registered consider as login ok.
-                setAuth(true);
-                setUser({ username: body.username });
-                navigate("/threads");
+                setAuth(false);
+                setUser({ username: "" });
+                navigate("/home");
             }
         } catch (error) {
             alert(error.message);
