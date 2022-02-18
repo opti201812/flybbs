@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, createContext } from 'react';
-import { userContext } from '../App';
+import { userContext } from './App';
 import { Container } from "react-bootstrap";
 import ThreadList from "./ThreadList";
 import { Routes, Route } from 'react-router-dom';
@@ -7,8 +7,6 @@ import ThreadPage from "./ThreadPage";
 import { HOST, PORT } from '../config';
 import Header from './Header';
 import Footer from './Footer';
-
-const [threads, setThreads] = useState([]);
 
 const loadThreads = async () => {
     const reqUrl = `${HOST}:${PORT}/api/threads`;
@@ -42,6 +40,8 @@ const ThreadListTable = () => {
 
 };
 const ThreadListPage = (props) => {
+    const [threads, setThreads] = useState([]);
+
     useEffect(() => {
         //navigate to  threads
     }, []);

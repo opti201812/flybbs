@@ -1,10 +1,12 @@
 import React from "react";
-import {withRouter} from 'react-router-dom';
+import {Navigate, useNavigate, useLocation} from 'react-router-dom';
 
 const Footer = (props) => {
-    const {history, location} = props;
+    const navigate = useNavigate();
+    const location = useLocation();
     const goBack = () => {
         //go back
+        navigate(-1);
     };
 
     return (
@@ -16,4 +18,4 @@ const Footer = (props) => {
     );
 };
 
-export default withRouter(Footer);
+export default Footer;

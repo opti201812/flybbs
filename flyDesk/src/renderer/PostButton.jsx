@@ -3,6 +3,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react';
 import {threadsContext} from './ThreadListPage';
+import {useLocation} from 'react-router-dom';
 let templateStr;
 
 const PostForm = () => {
@@ -42,6 +43,7 @@ const PostButton = (props) => {
     editorRef = useRef(null);
 
     const [show, setShow] = useState(false);
+    const location = useLocation();
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);
 

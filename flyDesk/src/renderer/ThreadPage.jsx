@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { userContext } from '../App';
+import { userContext } from './App';
 import { HOST, PORT } from '../config';
 import { Container, Row, ButtonGroup } from "react-bootstrap";
 import Thread from "./Thread";
