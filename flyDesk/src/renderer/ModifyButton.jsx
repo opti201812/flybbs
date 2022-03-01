@@ -1,33 +1,36 @@
 import { DOMAIN, HOST, PORT } from '../config'
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react'
+import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { threadsContext } from './ThreadListPage';
 
-let editorRef;
+let editorRef, modifyCount = 0;
 
 const ModifyForm = (props) => {
-    const { tid } = props;
     const [title, setTitle] = useState([]);
     const [content, setContent] = useState([]);
-    useEffect(() => {
-        const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;
-        const loadThread = async () => {
-            try {
-                const res = await fetch(reqUrl, { method: 'GET' });
-                const result = await res.json();
-                if (res.ok) {
-                    setTitle(result.data.thread.title);
-                    setContent(result.data.thread.content);
-                } else {
-                    alert(result.message);
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        };
+    const [modifyCount, setModifyCount] = useState(0);
+    const { tid } = useContext(threadsContext);
+    const reqUrl = `${HOST}:${PORT}/api/threads/${tid}`;
 
+    const loadThread = async () => {
+        try {
+            const res = await fetch(reqUrl, { method: 'GET' });
+            const result = await res.json();
+            if (res.ok) {
+                setTitle(result.data.thread.title);
+                setContent(result.data.thread.content);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+    useEffect(() => {
         loadThread();
-    }, []);
+    }, [modifyCount]);
 
     return (
         <Form id="modifyForm">
@@ -37,7 +40,7 @@ const ModifyForm = (props) => {
             </Form.Group>
             <Form.Group controlId="content">
                 <Form.Label className="mt-3">Content</Form.Label>
-                <p class="text-muted" style={{'fontSize':'10px'}}>(max size: 2MB)</p>
+                <p className="text-muted" style={{ 'fontSize': '10px' }}>(max size: 2MB)</p>
                 <Editor
                     initialValue={content.toString()}
                     onInit={(evt, editor) => editorRef.current = editor}
@@ -46,7 +49,7 @@ const ModifyForm = (props) => {
                     init={{
                         language: 'en',
                         menubar: false,
-                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave autoresize formatpainter',
+                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern help emoticons autosave autoresize formatpainter',
                         toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
                         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
                         images_upload_handler: (blobInfo, success, failure) => {
@@ -62,10 +65,14 @@ const ModifyForm = (props) => {
 };
 
 const ModifyButton = (props) => {
-    const { tid, loadThread } = props;
+    const { loadThread } = props;
     const [show, setShow] = useState(false);
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);
+    const location = useLocation();
+    const { tid } = useContext(threadsContext);
+    const [modifyCount, setModifyCount] = useState(0);
+
     editorRef = useRef(null);
 
     const modify = async (body) => {
@@ -79,7 +86,8 @@ const ModifyButton = (props) => {
             const result = await res.json();
             if (res.ok) {
                 closeModal();
-                loadThread();
+                setModifyCount(modifyCount + 1);
+                console.log(modifyCount)
             } else {
                 alert(result.message);
             }
@@ -98,9 +106,14 @@ const ModifyButton = (props) => {
         };
         modify(body);
     }
+
     return (
-        <div>
-            <Button variant="outline-warning" size="sm" onClick={() => showModal()}>Modify</Button>
+        <div className='d-inline'>
+            <button className="btn btn-default"
+                disabled={location.pathname === '/threads/'}
+                onClick={() => showModal()} >
+                <span className="icon icon-doc-text" />
+            </button>
             <Modal show={show} onHide={() => closeModal()}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modify thread</Modal.Title>

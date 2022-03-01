@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { HOST, PORT, DOMAIN } from '../config';
-// import { withRouter } from 'react-router-dom';   // O.V.
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { threadsContext } from './ThreadListPage';
 
 const DeleteButton = (props) => {
-    const { tid, history } = props;
+    const { tid } = useContext(threadsContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const params = useParams();
 
     const handle = async (body) => {
         try {
@@ -29,16 +33,18 @@ const DeleteButton = (props) => {
 
     const handleDelete = async () => {
         // if (confirm('Please confirm to delete.')) {
-            const { username, token } = JSON.parse(localStorage.getItem(DOMAIN));
-            const body = { username, token, tid };
-            handle(body);
+        const { username, token } = JSON.parse(localStorage.getItem(DOMAIN));
+        const body = { username, token, tid };
+        handle(body);
         // }
     }
 
     return (
-        <Button variant="outline-danger" size="sm" onClick={() => handleDelete()}>
-            Delete
-        </Button>
+        <button className="btn btn-default"
+            disabled={location.pathname === '/threads'}
+            onClick={() => handleDelete()} >
+            <span className="icon icon-trash" />
+        </button >
     )
 };
 

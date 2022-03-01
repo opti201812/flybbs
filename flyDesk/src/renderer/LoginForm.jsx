@@ -48,7 +48,7 @@ const LoginForm = (props) => {
             </Form.Group>
             <Form.Group controlId="password" className="mt-2">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Please input password" autoComplete="new-password"/>
+                <Form.Control type="password" placeholder="Please input password"/>
             </Form.Group>
             <Button variant="primary" type="submit" onClick={e => handleLogin(e)} className="mt-2">Login</Button>
         </Form>

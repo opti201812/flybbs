@@ -38,7 +38,7 @@ const ReplyForm = (props) => {
         <Form id="replyForm" className="p-3">
             <Form.Group controlId="content">
                 <Form.Label>Reply</Form.Label>
-                <p class="text-muted" style={{'fontSize':'10px'}}>(max size: 2MB)</p>
+                <p className="text-muted" style={{'fontSize':'10px'}}>(max size: 2MB)</p>
                 <Editor
                     initialValue={""}
                     onInit={(evt, editor) => editorRef.current = editor}
@@ -47,7 +47,7 @@ const ReplyForm = (props) => {
                     init={{
                         language: 'en',
                         menubar: false,
-                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave autoresize formatpainter',
+                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern help emoticons autosave autoresize formatpainter',
                         toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
                         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
                         images_upload_handler: (blobInfo, success, failure) => { 

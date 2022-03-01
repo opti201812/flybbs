@@ -3,6 +3,7 @@ import { HOST, PORT, DOMAIN } from '../config';
 import RegLogPage from './RegLogPage';
 import ThreadListPage from './ThreadListPage'
 import { ipcRenderer } from 'electron';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 
 const userContext = createContext({
   user: {},
@@ -35,6 +36,7 @@ function App() {
     }
   };
 
+  const navigator = useNavigate();
   const authenticate = async () => {
     try {
       const data = localStorage.getItem(DOMAIN);
@@ -53,6 +55,7 @@ function App() {
         setAuth(true);
         setUser(result.data);
         ipcRenderer.send('logoutMenuItem', true);
+        navigator('/threads')
       } else {
         setAuth(false);
         console.warn("Auth faile. ", result.message);

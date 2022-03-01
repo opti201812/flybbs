@@ -1,8 +1,8 @@
 import { HOST, PORT } from '../config'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import {threadsContext} from './ThreadListPage';
+import { threadsContext } from './ThreadListPage';
 
 const ThreadList = (props) => {
     const { loadThreads, threads } = useContext(threadsContext);

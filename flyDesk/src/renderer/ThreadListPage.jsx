@@ -2,57 +2,61 @@ import React, { useState, useContext, useEffect, createContext } from 'react';
 import { userContext } from './App';
 import { Container } from "react-bootstrap";
 import ThreadList from "./ThreadList";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import ThreadPage from "./ThreadPage";
 import { HOST, PORT } from '../config';
 import Header from './Header';
 import Footer from './Footer';
 
-const loadThreads = async () => {
-    const reqUrl = `${HOST}:${PORT}/api/threads`;
-    try {
-        const res = await fetch(reqUrl, { method: 'GET' });
-        const result = await res.json();
-        if (res.ok) {
-            setThreads(result.data);
-        } else {
-            alert(result.message);
-        }
-    } catch (error) {
-        alert(error.message);
-    }
-};
-
 const threadsContext = createContext({
     threads: [],
+    tid: 0,
+    setTid: () => {},
     setThreads: () => { },
     loadThreads: () => { },
 })
 
 const ThreadListTable = () => {
-    const { auth } = useContext(userContext);
-
     return (
         <Container className='mt-5 mb-5'>
-            <ThreadList loadThreads={loadThreads} threads={threads} />
+            <ThreadList />
         </Container>
     )
-
 };
+
 const ThreadListPage = (props) => {
     const [threads, setThreads] = useState([]);
+    const [tid, setTid] = useState(0);
+    const navigate = useNavigate();
+    const loadThreads = async () => {
+        const reqUrl = `${HOST}:${PORT}/api/threads`;
+        try {
+            const res = await fetch(reqUrl, { method: 'GET' });
+            const result = await res.json();
+            if (res.ok) {
+                setThreads(result.data);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     useEffect(() => {
-        //navigate to  threads
+        // loadThreads();
     }, []);
 
     return (
-        <threadsContext.Provider value={{ threads, setThreads, loadThreads }}>
+        <threadsContext.Provider value={{ threads, setThreads, loadThreads, tid, setTid }}>
             <div>
                 <Header />
+                {/* <ThreadListTable /> */}
                 <Routes>
-                    <Route exact path="/" element={<ThreadListTable />} />
-                    <Route exact path=":tid" element={<ThreadPage />} />
+                    {/* <Route exact path=":tid" element={<ThreadPage />} /> */}
+                    <Route exact path="/" element="../index.html" />
+                    <Route exact path="/threads" element={<ThreadListTable />} />
+                    <Route exact path="/threads/:tid" element={<ThreadPage />} />
                 </Routes>
                 <Footer />
             </div>

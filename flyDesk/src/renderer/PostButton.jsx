@@ -2,8 +2,8 @@ import { DOMAIN, HOST, PORT } from '../config'
 import React, { useState, useRef, useContext } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { Editor } from '@tinymce/tinymce-react';
-import {threadsContext} from './ThreadListPage';
-import {useLocation} from 'react-router-dom';
+import { threadsContext } from './ThreadListPage';
+import { useLocation } from 'react-router-dom';
 let templateStr;
 
 const PostForm = () => {
@@ -15,7 +15,7 @@ const PostForm = () => {
             </Form.Group>
             <Form.Group controlId="content">
                 <Form.Label className="mt-3">Content</Form.Label>
-                <p class="text-muted" style={{ 'fontSize': '10px' }}>(max size: 2MB)</p>
+                <p className="text-muted" style={{ 'fontSize': '10px' }}>(max size: 2MB)</p>
                 <Editor
                     initialValue={templateStr}
                     onInit={(evt, editor) => editorRef.current = editor}
@@ -24,7 +24,7 @@ const PostForm = () => {
                     init={{
                         language: 'en',
                         menubar: false,
-                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount imagetools textpattern help emoticons autosave autoresize formatpainter',
+                        plugins: 'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern help emoticons autosave autoresize formatpainter',
                         toolbar: 'code undo redo restoredraft | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent | styleselect formatselect fontselect fontsizeselect | bullist numlist | blockquote subscript superscript removeformat | table image media charmap emoticons hr pagebreak insertdatetime print preview | fullscreen | bdmap indent2em lineheight formatpainter axupimgs',
                         fontsize_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
                         images_upload_handler: (blobInfo, success, failure) => {
@@ -46,10 +46,10 @@ const PostButton = (props) => {
     const location = useLocation();
     const showModal = () => setShow(true);
     const closeModal = () => setShow(false);
+    const { loadThreads } = useContext(threadsContext);
 
     const post = async (body) => {
         const reqUrl = `${HOST}:${PORT}/api/threads`;
-        const { loadThreads } = useContext(threadsContext);
         try {
             const res = await fetch(reqUrl, {
                 method: 'POST',
@@ -83,16 +83,14 @@ const PostButton = (props) => {
     }
 
     return (
-        <div>
-            <Button variant="outline-success" size='sm' onClick={() => showModal()}>New thread</Button>
-            <div className='d-inline'>
-                <button
-                    className='btn btn-default'
-                    disabled={location.pathname !== '/threads'}
-                    onClick={() => showModal()} >
-                    <span className='icon icon-plus' />
-                </button>
-            </div>
+        <div className='d-inline'>
+            {/* <Button variant="outline-success" size='sm' onClick={() => showModal()}>New thread</Button> */}
+            <button
+                className='btn btn-default'
+                disabled={location.pathname !== '/threads'}
+                onClick={() => showModal()} >
+                <span className='icon icon-plus' />
+            </button>
             <Modal show={show} width={50 + '%'} onHide={() => closeModal()}>
                 <Modal.Header closeButton>
                     <Modal.Title>New thread</Modal.Title>
