@@ -4,8 +4,8 @@ let win;
 
 const createWindow = () => {
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1024,
+        height: 768,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -13,7 +13,7 @@ const createWindow = () => {
     });
     win.loadURL(`file://${__dirname}/../index.html`);
     win.on('closed', () => { win = null });
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
 };
 
 const getWindow = () => win;

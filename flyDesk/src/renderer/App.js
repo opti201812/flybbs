@@ -80,7 +80,7 @@ function App() {
 
   return (
     <userContext.Provider value={{ user, setUser, auth, setAuth }}>
-      <div className="m-0 p-0 w-100">{auth ? <ThreadListPage /> : <RegLogPage />}</div>
+      <div className="m-0 p-0 w-100 h-100">{auth ? <ThreadListPage /> : <RegLogPage />}</div>
     </userContext.Provider>
   );
 }

@@ -14,6 +14,8 @@ const threadsContext = createContext({
     setTid: () => {},
     setThreads: () => { },
     loadThreads: () => { },
+    threadModified: 0,
+    setThreadModified: ()=>{},
 })
 
 const ThreadListTable = () => {
@@ -27,6 +29,7 @@ const ThreadListTable = () => {
 const ThreadListPage = (props) => {
     const [threads, setThreads] = useState([]);
     const [tid, setTid] = useState(0);
+    const [threadModified, setThreadModified] = useState(0);
     const navigate = useNavigate();
     const loadThreads = async () => {
         const reqUrl = `${HOST}:${PORT}/api/threads`;
@@ -48,7 +51,7 @@ const ThreadListPage = (props) => {
     }, []);
 
     return (
-        <threadsContext.Provider value={{ threads, setThreads, loadThreads, tid, setTid }}>
+        <threadsContext.Provider value={{ threads, setThreads, loadThreads, tid, setTid, threadModified, setThreadModified }}>
             <div>
                 <Header />
                 {/* <ThreadListTable /> */}

@@ -9,7 +9,7 @@ import { threadsContext } from './ThreadListPage';
 
 const ThreadPage = (props) => {
     const params = useParams();
-    const { tid, setTid } = useContext(threadsContext);
+    const { tid, setTid, threadModified, setThreadModified } = useContext(threadsContext);
     const [thread, setThread] = useState({});
     const [comments, setComments] = useState([]);
     const { user, auth } = useContext(userContext);
@@ -31,8 +31,8 @@ const ThreadPage = (props) => {
     };
 
     useEffect(() => {
-        console.log("params: ", JSON.stringify(params))
-    }, []);
+        loadThread();
+    }, [threadModified]);
 
 
     return (
@@ -43,7 +43,6 @@ const ThreadPage = (props) => {
                 : null}
             <Thread tid={tid} thread={thread} comments={comments} loadThread={loadThread} />
             {auth ? <ReplyForm tid={tid} loadThread={loadThread} /> : null}
-
         </Container>
     );
 };
