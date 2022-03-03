@@ -13,7 +13,7 @@ const createWindow = () => {
     });
     win.loadURL(`file://${__dirname}/../index.html`);
     win.on('closed', () => { win = null });
-    //win.webContents.openDevTools();
+    // win.webContents.openDevTools();
 };
 
 const getWindow = () => win;

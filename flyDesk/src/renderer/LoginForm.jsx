@@ -3,10 +3,12 @@ import React, { useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { userContext } from './App';
 import { ipcRenderer } from 'electron';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
     const reqUrl = `${HOST}:${PORT}/api/users/login`;
     const { setUser, setAuth } = useContext(userContext);
+    const navigate = useNavigate();
 
     const login = async (body) => {
         try {
@@ -23,6 +25,7 @@ const LoginForm = (props) => {
                 setAuth(true);
                 setUser({ username: result.data.username });
                 ipcRenderer.send('logoutMenuItem', true);
+                navigate("/threads");
             } else {
                 alert(result.message);
                 ipcRenderer.send('logoutMenuItem', false);

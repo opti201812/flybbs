@@ -107,7 +107,7 @@ const ModifyButton = (props) => {
     return (
         <div className='d-inline'>
             <button className="btn btn-default"
-                disabled={location.pathname === '/threads/'}
+                disabled={location.pathname === '/threads'}
                 onClick={() => showModal()} >
                 <span className="icon icon-doc-text" />
             </button>

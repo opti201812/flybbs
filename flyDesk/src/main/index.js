@@ -11,6 +11,13 @@ app.on('ready', () => {
             item.enabled = msg;
         }
     });
+    
+    ipcMain.on('logoutClicked', (e, msg) =>{
+        if (msg) {
+            item.click();
+            item.enabled = false;
+        }
+    });
 });
 
 app.on('window-all-closed', () => {

@@ -29,10 +29,10 @@ function App() {
         setAuth(false);
         setUser({});
       } else {
-        alert(result.message);
+        console.warn(result.message);
       }
     } catch (error) {
-      alert(error.message);
+      console.warn(error.message);
     }
   };
 
