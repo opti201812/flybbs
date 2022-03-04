@@ -19,6 +19,7 @@ const PostForm = () => {
                 <Editor
                     initialValue={templateStr}
                     onInit={(evt, editor) => editorRef.current = editor}
+                    tinymceScriptSrc={`file://${__dirname}/public/tinymce/tinymce.min.js`}
                     id={"tincyEditor"}
                     apiKey="ptr6mblaq31o1ghf2979iusmzxd367ds7xtdoukeb5r3wbuf"
                     init={{

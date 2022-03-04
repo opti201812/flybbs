@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-
+import { app } from 'electron';
 let win;
 
 const createWindow = () => {
@@ -9,11 +9,14 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-         },
+        },
     });
-    win.loadURL(`file://${__dirname}/../index.html`);
+    // win.loadURL(`file://${__dirname}/../index.html`);   //Dev
+    win.loadURL(`file://${__dirname}/index.html`);   //Prod
     win.on('closed', () => { win = null });
-    // win.webContents.openDevTools();
+    if (!app.isPackaged) {
+        win.webContents.openDevTools({ mode: 'detach' });
+    }
 };
 
 const getWindow = () => win;

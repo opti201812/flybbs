@@ -43,6 +43,7 @@ const ReplyForm = (props) => {
                     initialValue={""}
                     onInit={(evt, editor) => editorRef.current = editor}
                     id={"tincyEditor"}
+                    tinymceScriptSrc={`file://${__dirname}/public/tinymce/tinymce.min.js`}
                     apiKey="ptr6mblaq31o1ghf2979iusmzxd367ds7xtdoukeb5r3wbuf"
                     init={{
                         language: 'en',
