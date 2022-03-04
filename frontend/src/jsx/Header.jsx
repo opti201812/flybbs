@@ -40,13 +40,13 @@ const Header = (props) => {
                 width={32}
                 height={32}
                 className='rounded' />
-            <span style={{ color: 'white', marginLeft: 0.5+'rem', cursor: 'pointer' }} onClick={() => logout()}>Exit</span>
+            <span style={{ color: 'white', marginLeft: 0.5 + 'rem', cursor: 'pointer' }} onClick={() => logout()}>Exit</span>
         </div>
     );
 
     return (
         <Navbar bg="primary" variant="dark" expand="lg" className="pl-2">
-            <Navbar.Brand href="#" style={{marginLeft:1+'rem'}}>FlyBBS</Navbar.Brand>
+            <Navbar.Brand href="#" style={{ marginLeft: 1 + 'rem' }}>FlyBBS</Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav' >
                 <Nav className="mr-auto">
@@ -66,6 +66,14 @@ const Header = (props) => {
                             </LinkContainer>
                         </NavDropdown>
                         : null}
+                    <NavDropdown title="Downlaod" id="basic-nav-down">
+                        <LinkContainer to="">
+                            <NavDropdown.Item onClick={()=>{window.open(`${HOST}:${PORT}/flydesk.dmg`)}} >macOS x64 client</NavDropdown.Item>
+                        </LinkContainer>
+                        <LinkContainer to={``}>
+                            <NavDropdown.Item onClick={()=>{window.open(`${HOST}:${PORT}/flydesk_win.dmg`)}} >Windows x64 client</NavDropdown.Item>
+                        </LinkContainer>
+                    </NavDropdown>
                 </Nav>
                 <div className='m1-auto'>
                     {auth ? <Avatar /> : null}
