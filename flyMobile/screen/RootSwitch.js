@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { NativeBaseProvider, Container, Content } from 'native-base';
 import { ActivityIndicator, StatusBar, Alert  } from 'react-native';
-import {AsyncStorage} from '@react-native-community/async-storage';
 import {HOST, PORT} from '../config';
 import AuthLoadiingScreen from './AuthLoadiingScreen';
 import LoginScreen from './screen/LoginScreen';
