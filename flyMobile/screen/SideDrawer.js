@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NativeBaseProvider, Center, Container, Card, Button, Text, Box } from 'native-base';
+import { NativeBaseProvider, Center, Card, Button, Text, Box } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { HOST, PORT } from '../config'
@@ -10,13 +10,14 @@ const SideDrawer = (props) => {
 
     const getUser = async () => {
         try {
-            setUsername(await AsyncStorage.getItem('username'));
+            username = await AsyncStorage.getItem('username');
             const res = await fetch(`${HOST}:${PORT}/api/users/${username}`, {
                 method: 'GET',
             });
             const result = await res.json();
             if (res.ok) {
                 setUser(result.data);
+                setUsername(username);
             } else {
                 Alert.alert(result.message);
             }
