@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { NativeBaseProvider, Center, Card, Button, Text, Box } from 'native-base';
+import { NativeBaseProvider, Avatar, Center, Card, Button, Text, Box } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 import { HOST, PORT } from '../config'
 
 const SideDrawer = (props) => {
-    const [user, setUser] = useState();
-    const [username, setUsername] = useState(null);
+    const [user, setUser] = useState({});
+    const [username, setUsername] = useState("");
 
     const getUser = async () => {
         try {
@@ -55,13 +55,15 @@ const SideDrawer = (props) => {
             <Center>
                 <Card style={{ margin: 50 }}>
                     <Box>
-                        {/* <Thumbnail source={{
-                                uri: user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.png`
-                            }} /> */}
+                        <Center>
+                            <Avatar size="lg" source={{
+                                uri: user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`
+                            }} />
+                        </Center>
                     </Box>
                     <Box>
                         <Center flex={1}>
-                            <Text>Welcome!</Text>
+                            <Text>Welcome back!</Text>
                             <Text>{username}</Text>
                         </Center>
                     </Box>
