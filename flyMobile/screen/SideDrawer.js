@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NativeBaseProvider, Avatar, Center, Card, Button, Text, Box } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from 'react-native';
+import { LogAlert, WarnAlert, ErrorAlert } from '../common';
 import { HOST, PORT } from '../config'
 
 const SideDrawer = (props) => {
@@ -10,19 +10,20 @@ const SideDrawer = (props) => {
 
     const getUser = async () => {
         try {
-            username = await AsyncStorage.getItem('username');
-            const res = await fetch(`${HOST}:${PORT}/api/users/${username}`, {
+            const localName = await AsyncStorage.getItem('username');
+            const res = await fetch(`${HOST}:${PORT}/api/users/${localName}`, {
                 method: 'GET',
             });
             const result = await res.json();
             if (res.ok) {
+                LogAlert("get user OK: " + localName)
+                setUsername(localName);
                 setUser(result.data);
-                setUsername(username);
             } else {
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     }
 
@@ -39,10 +40,10 @@ const SideDrawer = (props) => {
                 setUser({});
                 props.navigation.navigate('Auth');
             } else {
-                Alert.alert(res.message);
+                WarnAlert(res.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         };
     };
 

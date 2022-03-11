@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { Image, TouchableOpacity, Alert } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
+import { LogAlert, WarnAlert, ErrorAlert } from "../common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NativeBaseProvider, Container, Input, Box, Button, Text, Actionsheet, useDisclose } from 'native-base';
+import { NativeBaseProvider, Stack, FormControl, Center, Input, Box, Button, Text, Actionsheet, useDisclose } from 'native-base';
 import { REQ_USERS_API, REQ_API_ROOT } from '../config.js';
-const Item = Box;
-const Form = Box;
-const Label = Box;
 
 const UserScreen = (props) => {
     const [description, setDescription] = useState("");
@@ -25,12 +23,10 @@ const UserScreen = (props) => {
                 setDescription(user.description);
                 console.log("set img & desc: ", avatar, user.description);
             } else {
-                console.warn("result.message", result.message);
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            console.error("err.message", err.message);
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     };
     useEffect(() => {
@@ -59,6 +55,7 @@ const UserScreen = (props) => {
             await formData.append('username', username);
             await formData.append('token', token);
             await formData.append('description', description);
+            console.log("imgUri: ", imgUri)
             await formData.append('avatar', { uri: imgUri, type: 'multipart/form-data', name: 'temp' });
             const res = await fetch(REQ_USERS_API, {
                 method: 'PATCH',
@@ -66,59 +63,47 @@ const UserScreen = (props) => {
             });
             const result = await res.json();
             if (res.ok) {
-                Alert.alert(result.message);
+                LogAlert(result.message);
             } else {
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     }
 
     const { isOpen, onOpen, onClose } = useDisclose();
     return (
         <NativeBaseProvider>
-            <Container padder>
-                <Form>
-                    <Item>
-                        <Label>Personal Description</Label>
-                        <Input onChangeText={description => setDescription(description)} value={description} />
-                    </Item>
-                    <Item>
-                        <Label>Upload Avatar</Label>
-                        <TouchableOpacity onPress={onOpen} >
-                            {/* <TouchableOpacity onPress={() => ActionSheet.show(
-                            {
-                                options: ['shot', 'album', 'cancel'],
-                                cancelButtonIndex: 2,
-                                title: 'Upload avatar',
-                            },
-                            (buttonIndex) => {
-                                if (buttonIndex == 0) {
-                                    onTakePic();
-                                } else if (buttonIndex == 1) {
-                                    onChoosePic();
-                                }
-                            },
-                        )} > */}
-                            <Image style={{ width: 150, height: 150, backgroundColor: '#dddddd' }} source={{ uri: imgUri }} />
-                        </TouchableOpacity>
-                        <Actionsheet isOpen={isOpen} onClose={onClose}>
-                            <Actionsheet.Content>
-                                <Actionsheet.Header>Upload avatar</Actionsheet.Header>
-                                <Actionsheet.Item onPress={()=>onTakePic()}>Camera</Actionsheet.Item>
-                                <Actionsheet.Item onPress={()=>onChoosePic()}>Album</Actionsheet.Item>
-                            </Actionsheet.Content>
-                            <Actionsheet.Footer>
-                                <Actionsheet.Item onPress={onClose}>Cancel</Actionsheet.Item>
-                            </Actionsheet.Footer>
-                        </Actionsheet>
-                    </Item>
-                    <Button block success style={{ margin: 10 }} onPress={() => edit()}>
-                        <Text>Modify info</Text>
+            <FormControl>
+                <Center>
+                    <Stack space={3} mt="5" width="60%">
+                        <Stack>
+                            <FormControl.Label>Personal Description</FormControl.Label>
+                            <Input width="100%" onChangeText={description => setDescription(description)} p={2} placeholder="description" value={description} />
+                        </Stack>
+                        <Stack>
+                            <FormControl.Label>Upload Avatar</FormControl.Label>
+                            <TouchableOpacity  onPress={onOpen} >
+                                <Image style={{ width: 294, height: 294, backgroundColor: '#dddddd' }} source={{ uri: imgUri }} />
+                            </TouchableOpacity>
+                            <Actionsheet isOpen={isOpen} onClose={onClose}>
+                                <Actionsheet.Content>
+                                    <Actionsheet.Header>Upload avatar</Actionsheet.Header>
+                                    <Actionsheet.Item onPress={() => onTakePic()}>Camera</Actionsheet.Item>
+                                    <Actionsheet.Item onPress={() => onChoosePic()}>Album</Actionsheet.Item>
+                                </Actionsheet.Content>
+                                <Actionsheet.Footer>
+                                    <Actionsheet.Item onPress={onClose}>Cancel</Actionsheet.Item>
+                                </Actionsheet.Footer>
+                            </Actionsheet>
+                        </Stack>
+                    </Stack>
+                    <Button block success style={{ margin: 20 }} onPress={() => edit()}>
+                        <Text>Submit Modification</Text>
                     </Button>
-                </Form>
-            </Container>
+                </Center>
+            </FormControl>
         </NativeBaseProvider>
     );
 };

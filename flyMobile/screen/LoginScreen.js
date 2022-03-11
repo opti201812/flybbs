@@ -8,17 +8,11 @@ const Item = (props) => {
     const { isRequired, label, type, defaultValue, placeholder, helperText, errorText, changeFunc } = props;
     return (
         <FormControl isRequired={isRequired}>
-            <Stack mx="4" mt={4} alignContent="center">
-                <Center flex={1}>
+            <Stack mx="4" mt={4}>
                     <FormControl.Label>{label}</FormControl.Label>
                     <Input type={type} defaultValue={defaultValue} placeholder={placeholder} onChangeText={(text) => changeFunc(text)} />
-                    <FormControl.HelperText>
-                        {helperText}
-                    </FormControl.HelperText>
-                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                        {errorText}
-                    </FormControl.ErrorMessage>
-                </Center>
+                    <FormControl.HelperText>{helperText}</FormControl.HelperText>
+                    <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>{errorText}</FormControl.ErrorMessage>
             </Stack>
         </FormControl>
     );
@@ -52,14 +46,12 @@ const LoginScreen = (props) => {
     return (
         <NativeBaseProvider>
             <Center>
-                <Container padder>
-                    <Box>
-                        <Item isRequired={true} label="Username" type="input" defaultValue="" placeholder="" helperText="Input account name" errorText="Please input account name" changeFunc={username => setUsername(username)} />
-                        <Item isRequired={true} label="Password" type="password" defaultValue="" placeholder="" helperText="Input your password" errorText="Please input password" changeFunc={password => setPassword(password)} />
-                        <Button block success style={{ margin: 10 }} onPress={() => login()}>
-                            <Text>Login</Text></Button>
-                    </Box>
-                </Container>
+                <Text mt="2" fontSize="2xl" bold letterSpacing="xs" >FlyBBS Mobile</Text>
+                <Box flex={1} width="80%">
+                    <Item isRequired={true} label="Username" type="input" defaultValue="" placeholder="" helperText="Input account name" errorText="Please input account name" changeFunc={username => setUsername(username)} />
+                    <Item isRequired={true} label="Password" type="password" defaultValue="" placeholder="" helperText="Input your password" errorText="Please input password" changeFunc={password => setPassword(password)} />
+                    <Button  width="92%" block success mt={10} ml="4" onPress={() => login()}><Text>Login</Text></Button>
+                </Box>
                 <Pressable onPress={() => props.navigation.navigate('Register')}><Text>Register</Text></Pressable>
             </Center>
         </NativeBaseProvider>
