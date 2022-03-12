@@ -4,6 +4,7 @@ import { NativeBaseProvider, Center, Container, Box } from 'native-base';
 import { ActivityIndicator, StatusBar, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HOST, PORT } from '../config'
+import { LogAlert, WarnAlert, ErrorAlert } from '../common';
 
 // const loadFonts = async () => {
 //     await Font.loadFonts({
@@ -28,16 +29,14 @@ const AuthLoadingScreen = (props) => {
             });
             const result = await res.json();
             if (res.ok) {
-                Alert.alert('Main');
+                console.log('Auth ok');
                 props.navigation.navigate('Main');
             } else {
-                Alert.alert("Error", result.message);
-                console.warn("Auth wrong: ", result.message)
+                WarnAlert(result.message)
                 props.navigation.navigate('Auth');
             }
         } catch (err) {
-            console.error("Auth error: ", error.message)
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     }
     useEffect(() => {
@@ -47,15 +46,11 @@ const AuthLoadingScreen = (props) => {
 
     return (
         <NativeBaseProvider>
-            <Container>
-                <Box>
-                    <Center flex={1} w={200} h="1">
-                        <ActivityIndicator />
-                    </Center>
-                    <StatusBar barStyle='default' />
-                </Box>
-            </Container>
-        </NativeBaseProvider>
+            <Box>
+                <ActivityIndicator />
+                <StatusBar barStyle='default' />
+            </Box>
+        </NativeBaseProvider >
     )
 };
 

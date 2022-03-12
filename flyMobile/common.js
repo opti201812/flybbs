@@ -16,6 +16,6 @@ const MyAlert = (msg, level) => {
     Alert.alert(msg);
 }
 const LogAlert = MyAlert;
-const WarnAlert = ((msg) => MyAlert(msg, "warn"));
-const ErrorAlert = ((msg) => MyAlert(msg, "error"));
+const WarnAlert = (msg) => MyAlert(msg, "warn");
+const ErrorAlert = (msg) => MyAlert(msg, "error");
 export { LogAlert, WarnAlert, ErrorAlert };

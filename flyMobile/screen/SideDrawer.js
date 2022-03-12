@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NativeBaseProvider, Avatar, Center, Card, Button, Text, Box } from 'native-base';
+import { NativeBaseProvider, Avatar, Center, Card, Button, Text, Box, Container, VStack } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LogAlert, WarnAlert, ErrorAlert } from '../common';
 import { HOST, PORT } from '../config'
@@ -16,7 +16,7 @@ const SideDrawer = (props) => {
             });
             const result = await res.json();
             if (res.ok) {
-                LogAlert("get user OK: " + localName)
+                console.log("get user OK: " + localName)
                 setUsername(localName);
                 setUser(result.data);
             } else {
@@ -53,28 +53,20 @@ const SideDrawer = (props) => {
 
     return (
         <NativeBaseProvider>
-            <Center>
-                <Card style={{ margin: 50 }}>
-                    <Box>
-                        <Center>
-                            <Avatar size="lg" source={{
-                                uri: user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`
-                            }} />
-                        </Center>
+            <VStack mt={10} alignItems='center'>
+                <Box width="300" >
+                    <Avatar alignSelf='center' size="lg" source={{
+                        uri: user.avatar ? `${HOST}:${PORT}/upload/${user.avatar}` : `${HOST}:${PORT}/img/avatar.jpeg`
+                    }} />
+                    <Box alignItems='center' m='5'>
+                        <Text>Welcome back!</Text>
+                        <Text>{username}</Text>
                     </Box>
-                    <Box>
-                        <Center flex={1}>
-                            <Text>Welcome back!</Text>
-                            <Text>{username}</Text>
-                        </Center>
-                    </Box>
-                </Card>
-                <Center>
-                    <Button full light onPress={() => logout()}>
-                        <Text>Logout</Text>
-                    </Button>
-                </Center>
-            </Center>
+                </Box>
+                <Button width="80" alignSelf='center' mt={10} full light onPress={() => logout()}>
+                    <Text color='#fff'>Logout</Text>
+                </Button>
+            </VStack>
         </NativeBaseProvider>
     )
 }

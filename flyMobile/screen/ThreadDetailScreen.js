@@ -40,7 +40,7 @@ const ThreadDetailScreen = (props) => {
                             <Text fontSize="sm" fontWeight="bold">{data.author.username}</Text>
                             <Text fontSize="xs" maxW="90%">{data.author.description}</Text>
                         </VStack>
-                        <Box height="100%" mt={1} alignContent="flex-end">
+                        <Box width="30%" height="100%" mt={1} alignItems="flex-end">
                             <Text fontSize="xs" alignContent="flex-end">{new Date(data.posttime).toLocaleString()}</Text>
                         </Box>
                     </HStack>

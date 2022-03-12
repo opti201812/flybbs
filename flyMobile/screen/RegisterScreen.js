@@ -33,12 +33,13 @@ const RegisterScreen = (props) => {
         <NativeBaseProvider>
             <Center>
                 <Container padder>
+                    <Text alignSelf='center' mt="2" fontSize="2xl" bold letterSpacing="xs" >FlyBBS Mobile</Text>
                     <Box>
                         <Center>
                             <Item isRequired={true} label="Username" type="input" defaultValue="" placeholder="" helperText="Input account name" errorText="Please input user name" changeFunc={username => setUsername(username)} />
                             <Item isRequired={true} label="Password" type="password" defaultValue="" placeholder="" helperText="Input your password" errorText="Please input password" changeFunc={password => setPassword(password)} />
                             <Item isRequired={true} label="Reinput Password" type="password" defaultValue="" placeholder="" helperText="Reinput the same password" errorText="Please reinput same password" changeFunc={password => setPassword(password)} />
-                            <Button block success style={{ margin: 10 }} onPress={() => register()}>
+                            <Button  width="90%" mt={10} onPress={() => register()}>
                                 <Text>Register</Text></Button>
                         </Center>
                     </Box>
