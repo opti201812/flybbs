@@ -4,6 +4,7 @@ import { Alert } from "react-native";
 import { NativeBaseProvider, Container, Box, Label, Input, Button, Text, Pressable, Center } from 'native-base';
 import { HOST, PORT } from '../config.js';
 import { Item } from './LoginScreen';
+import { WarnAlert, ErrorAlert } from '../common';
 
 const RegisterScreen = (props) => {
     const [username, setUsername] = useState(null);
@@ -20,13 +21,13 @@ const RegisterScreen = (props) => {
             });
             const result = await res.json();
             if (res.ok) {
-                Alert.alert(result.message);
+                LogAlert("Register " + result.message);
                 props.navigation.navigate('Main');
             } else {
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     };
     return (

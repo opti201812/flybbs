@@ -4,6 +4,7 @@ import { Alert, View } from "react-native";
 import { NativeBaseProvider, Container, Avatar, Text, VStack, Box, Divider, HStack } from 'native-base';
 import { REQ_THREADS_API, REQ_API_ROOT } from '../config.js';
 import { WebView } from 'react-native-webview';
+import { WarnAlert, ErrorAlert } from '../common';
 
 const ThreadDetailScreen = (props) => {
     const tid = props.navigation.getParam('thread')._id;
@@ -19,10 +20,10 @@ const ThreadDetailScreen = (props) => {
                 setThread(result.data.thread);
                 setComments(result.data.comments);
             } else {
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     }
     const injectedJs = 'setInterval(() => {window.parent.postMessage(document.getElementById("content").clientHeight)}, 500)';

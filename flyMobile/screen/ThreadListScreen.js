@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { NativeBaseProvider, Container, Box, List, Text, Icon, Row, Column, Pressable } from 'native-base';
 import { REQ_THREADS_API } from '../config.js';
 import { Ionicons } from '@expo/vector-icons';
+import { WarnAlert, ErrorAlert } from '../common';
 
 const ThreadListScreen = (props) => {
     const { navigation } = props;
@@ -14,10 +15,10 @@ const ThreadListScreen = (props) => {
             if (res.ok) {
                 setThreads(result.data);
             } else {
-                Alert.alert(res.message);
+                WarnAlert(res.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     }
 

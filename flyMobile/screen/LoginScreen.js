@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { NativeBaseProvider, Container, Box, FormControl, WarningOutlineIcon, Stack, Input, Button, Text, Pressable, Center, VStack } from 'native-base';
 import { HOST, PORT } from '../config.js';
+import { LogAlert, WarnAlert, ErrorAlert } from "../common.js";
 
 const Item = (props) => {
     const { isRequired, label, type, defaultValue, placeholder, helperText, errorText, changeFunc } = props;
@@ -34,13 +35,13 @@ const LoginScreen = (props) => {
             if (res.ok) {
                 await AsyncStorage.setItem('username', result.data.username);
                 await AsyncStorage.setItem('token', result.data.token);
-                Alert.alert(result.message);
+                console.log("Login " + result.message);
                 props.navigation.navigate('Main');
             } else {
-                Alert.alert(result.message);
+                WarnAlert(result.message);
             }
         } catch (err) {
-            Alert.alert(err.message);
+            ErrorAlert(err.message);
         }
     };
     return (
